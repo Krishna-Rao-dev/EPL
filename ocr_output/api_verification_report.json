@@ -1,0 +1,116 @@
+{
+  "timestamp": "2026-03-18T09:33:23.576286",
+  "checks": {
+    "PAN Format": {
+      "valid": false,
+      "pan": "AKCM1234C",
+      "error": "Invalid PAN format",
+      "critical": true
+    },
+    "GSTIN Format": {
+      "valid": false,
+      "gstin": "15-CHAR GSTIN",
+      "error": "Invalid GSTIN format",
+      "critical": true
+    },
+    "CIN Format": {
+      "valid": true,
+      "cin": "U45200TN2015PTC123456",
+      "listing_status": "Unlisted",
+      "industry_code": "45200",
+      "state_code": "TN",
+      "year_of_incorp": "2015",
+      "company_type": "PTC",
+      "critical": true
+    },
+    "LEI Format": {
+      "valid": false,
+      "lei": "20-CHAR LEI",
+      "error": "Invalid LEI format (must be 20 alphanumeric chars)",
+      "critical": true
+    },
+    "PAN \u2194 GSTIN Embed": {
+      "consistent": false,
+      "pan": "AKCM1234C",
+      "gstin": "15-CHAR GSTIN",
+      "embedded_pan": "-CHAR GSTI",
+      "message": "MISMATCH: PAN=AKCM1234C but GSTIN embeds=-CHAR GSTI",
+      "critical": true
+    },
+    "LEI (GLEIF)": {
+      "verified": false,
+      "status": "NOT_FOUND",
+      "lei": "20-CHAR LEI",
+      "source": "GLEIF",
+      "critical": true
+    },
+    "Pincode (Postal API)": {
+      "verified": true,
+      "pincode": "600018",
+      "state": "Tamil Nadu",
+      "district": "Chennai",
+      "region": "Chennai Region",
+      "post_offices": 2,
+      "state_match": true,
+      "source": "INDIA_POSTAL_API",
+      "critical": true
+    },
+    "PAN Active (Sandbox)": {
+      "verified": false,
+      "status": "NOT_FOUND",
+      "source": "SANDBOX",
+      "pan": "AKCM1234C",
+      "critical": true
+    },
+    "GST Active (Sandbox)": {
+      "verified": false,
+      "status": "NOT_FOUND",
+      "source": "SANDBOX",
+      "gstin": "15-char GSTIN",
+      "critical": true
+    },
+    "CIN Active (Sandbox)": {
+      "verified": true,
+      "status": "Active",
+      "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "roc": "ROC Chennai",
+      "incorp_date": "15/04/2015",
+      "source": "SANDBOX",
+      "cin": "U45200TN2015PTC123456",
+      "critical": true
+    },
+    "Company Name Consistency": {
+      "consistent": true,
+      "base": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "details": {
+        "OCR_GST": {
+          "name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+          "score": 1.0,
+          "match": true
+        }
+      },
+      "threshold": 0.82,
+      "critical": false
+    },
+    "Electricity Bill Date": {
+      "valid": false,
+      "bill_date": "20/11/2024",
+      "age_days": 483,
+      "max_days": 90,
+      "message": "Bill is 483 days old \u2014 EXCEEDS 90-day limit",
+      "critical": false
+    },
+    "Telephone Bill Date": {
+      "valid": false,
+      "bill_date": "25/11/2024",
+      "age_days": 478,
+      "max_days": 90,
+      "message": "Bill is 478 days old \u2014 EXCEEDS 90-day limit",
+      "critical": false
+    }
+  },
+  "passed": 4,
+  "failed": 7,
+  "warnings": 2,
+  "verdict": "FAIL"
+}

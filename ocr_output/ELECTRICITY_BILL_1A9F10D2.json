@@ -1,0 +1,27 @@
+{
+  "doc_id": "1A9F10D2",
+  "doc_type": "ELECTRICITY_BILL",
+  "source_file": "08_Electricity_Bill.pdf",
+  "extracted_at": "2026-03-17T14:17:38.171908",
+  "fields": {
+    "consumer_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+    "consumer_number": "33-4892-0045-001",
+    "discom": "TAMIL NADU GENERATION AND SAIBE MI CORPORATION LID (LANEGEDEO)",
+    "address": "No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018",
+    "pincode": "600018",
+    "bill_number": "TNEB/CHN/2024/NOV/88234",
+    "bill_date": "20/11/2024",
+    "due_date": "05/12/2024",
+    "billing_period": "NOV 2024",
+    "units_consumed": "552",
+    "total_amount": "4693.70",
+    "connection_type": "Commercial"
+  },
+  "cross_check": {
+    "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+    "address": "No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018",
+    "pincode": "600018"
+  },
+  "ocr_raw_text": "TAMIL NADU GENERATION AND sabe mi CORPORATION LID (LANEGEDEO)\nELECTNIGIY ALL \u2014 COMVMERGAL GONNECTION |) Ghemei South Division\nBill No: TNEB/CHN/2024/NOV/88234 Bill Date: 20/11/2024 Due Date: 05/12/2024 Period: NOV 2024\nCONSUMER DETAILS METER READING\nConsumer No: 33-4892-0045-001 Previous Reading: 12,340 Units (20/10/2024)\nName: MANIKANDAN CONSTRUCTIONS PVT LTD Present Reading: 12,892 Units (20/1 1/2024)\nAddress: No. 14, Second Floor, Anna Salai Units Consumed: 552 Units\nTeynampet, Chennai - 600018 Multiplying Factor: 1\nBILISDESCRIPTION fAmounty(Rs:)]\nEnergy Charges (552 units @ Rs. 6.50/unit) 3,588.00\nFixed Charges (Commercial 15KW) 450.00\nElectricity Duty @ 15% 605.70\nMeter Rent 50.00\nPrevious Arrears 0.00\nSurcharge 0.00\nTOVAL AMOUNT DUE RS 4C8.70\nAmount in words: Rupees Four Thousand Six Hundred Ninety Three and Seventy Paise Only\nPAYMENT OPTIONS ;\nOnline: www.tangedco.gov.in | NEFT/RTGS | TANGEDCO Customer Service Centre\nPhone: 1912 (Helpline) | Email: helpdesk@tangedco.gov.in\nFAKE ",
+  "status": "EXTRACTED"
+}

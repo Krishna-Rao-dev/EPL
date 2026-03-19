@@ -1,0 +1,25 @@
+{
+  "doc_id": "474381E8",
+  "doc_type": "INCORPORATION_CERTIFICATE",
+  "source_file": "04_Certificate_of_Incorporation.pdf",
+  "extracted_at": "2026-03-17T14:16:43.147216",
+  "fields": {
+    "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+    "cin": "U45200TN2015PTC123456",
+    "pan_number": "AAKCM1234C",
+    "date_of_incorp": "15/04/2015",
+    "company_type": "Company Limited by Shares, Non-Government Company",
+    "authorized_capital": "Rs. 25,00,000/- (Twenty Five Lakhs)",
+    "state": "Tamil Nadu",
+    "roc": "Chennai",
+    "address": "",
+    "pincode": ""
+  },
+  "cross_check": {
+    "pan_number": "AAKCM1234C",
+    "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+    "cin": "U45200TN2015PTC123456"
+  },
+  "ocr_raw_text": "MINISTRY OF\nCORP AFFAIRS\nMINISTRY OF CORPORATE AFFAIRS \u2014 GOVERNMENT OF INDIA\nREGISTRAR OF COMPANIES, TAMIL NADU, CHENNAI\n[Pursuant to Section 7(2) of the Companies Act, 2013]\n| hereby certify that\nMANIKANDAN CONSTRUCTIONS PVT LTD\nis this day incorporated under the Companies Act, 2013\nand that the company is LIMITED.\nCorporate Identity Number (CIN) : U45200TN2015PTC123456\nPAN of Company : AAKCM1234C\nDate of Incorporation : 15/04/2015\nType of Company : Company Limited by Shares\nSub Category : Non-Government Company\nAuthorized Capital : Rs. 25,00,000/- (Twenty Five Lakhs)\nRegistered State : Tamil Nadu\nROC : Chennai\nGiven under my hand at Chennai this Fifteenth day of April, Two Thousand Fifteen.\nOFFICE SEAL For Registrar of Companies\nROG \u2014 CHENNAI Tamil Nadu, Chennai\nVerify at: www.mca.gov.in | FAKE DOCUMENT \u2014 FOR OCR TESTING ONLY\nIMC AMIECINAU45200 IN201 5B e1 23456]\n",
+  "status": "EXTRACTED"
+}

@@ -1,0 +1,28 @@
+{
+  "doc_id": "78C331B7",
+  "doc_type": "GST_CERTIFICATE",
+  "source_file": "02_GST_Certificate.pdf",
+  "extracted_at": "2026-03-17T14:16:19.093929",
+  "fields": {
+    "gstin": "15-char GSTIN",
+    "pan_number": "AAKCM1234C",
+    "legal_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+    "trade_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+    "state_code": "33",
+    "state": "Tamil Nadu",
+    "status": "ACTIVE",
+    "registration_date": "15/04/2015",
+    "constitution": "Private Limited Company",
+    "address": "No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018",
+    "pincode": "600018"
+  },
+  "cross_check": {
+    "pan_number": "AAKCM1234C",
+    "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+    "address": "No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018",
+    "pincode": "600018",
+    "gstin": "15-char GSTIN"
+  },
+  "ocr_raw_text": "GOVT.\nGOODS SERVICES or. GERIIACATE\nGovernmentioiindial IEMinistiwoiEinancell EEORMIGSIERE G06}\nCERTIFICATE OF REGISTRATION\n[See Rule 10(1) of the CGST Rules, 2017]\nGSTIN (Goods and Services Tax Identification Number)\nNEC URATTON DEWNLS\nLegal Name of Business : MANIKANDAN CONSTRUCTIONS PVT LTD\nTrade Name : MANIKANDAN CONSTRUCTIONS PVT LTD\nConstitution of Business : Private Limited Company\nPAN : AAKCM1234C\nDate of Liability : 15/04/2015\nType of Registration : Regular\nPeriod of Validity : 15/04/2015 to Till Cancelled\nNature of Business Activity : Construction of Buildings / Civil Engineering\nStatus : ACTIVE\nFINGAL FLAGS OF BUSES\nAddress Line 1 : No. 14, Second Floor, Anna Salai\nAddress Line 2 : Teynampet, Chennai - 600018\nPIN Code : 600018\nState : Tamil Nadu | State Code: 33\nAAPPROVINGYAUTHORITY,\nDesignation : Assistant Commissioner, CGST, Chennai South\nCentre Jurisdiction : Range: Anna Salai, Division: Chennai South\nState Jurisdiction : State: Tamil Nadu, Zone: Chennai\nDate of Issue : 2",
+  "status": "EXTRACTED"
+}

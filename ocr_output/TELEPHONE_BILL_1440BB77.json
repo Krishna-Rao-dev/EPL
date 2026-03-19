@@ -1,0 +1,27 @@
+{
+  "doc_id": "1440BB77",
+  "doc_type": "TELEPHONE_BILL",
+  "source_file": "09_Telephone_Landline_Bill.pdf",
+  "extracted_at": "2026-03-17T14:17:52.000199",
+  "fields": {
+    "account_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+    "account_number": "TN-CHN-044-28140055",
+    "telephone_number": "044-28140055",
+    "provider": "Chennai Telephones",
+    "address": "No. 14, Second Floor, Anna Salai Teynampet, Chennai - 600018",
+    "pincode": "600018",
+    "bill_number": "BSNL/CHN/LL/2024/NOV/44512",
+    "bill_date": "25/11/2024",
+    "due_date": "10/12/2024",
+    "billing_period": "NOV 2024",
+    "total_amount": "786.65",
+    "connection_type": "Landline \u2014 Commercial (BT Basic)"
+  },
+  "cross_check": {
+    "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+    "address": "No. 14, Second Floor, Anna Salai Teynampet, Chennai - 600018",
+    "pincode": "600018"
+  },
+  "ocr_raw_text": "EUARAIT cael i ah FIMITED]KBSNIB)\nTELEPHONE HILL \u2014 LANDLINE CONNECTION (| Chennai Teleshtenss\nBill No: BSNL/CHN/LL/2024/NOV/44512 Bill Date: 25/11/2024 Due Date: 10/12/2024 Period: NOV 2024\n| ACCOUNT & CONNECTION DETAILS .\nAccount Number: TN-CHN-044-28140055\nTelephone Number: 044-28140055\nConnection Type: Landline \u2014 Commercial (BT Basic)\nAccount Name: MANIKANDAN CONSTRUCTIONS PVT LTD\nBilling Address: No. 14, Second Floor, Anna Salai\nTeynampet, Chennai - 600018\nPIN Code: 600018\n| Circle: Chennai Telephones .\n\u201cCustomer ID: BSNL-CID-20150420-8812 ,\nConnection Date: 20/04/2015\nPlan: BT Combo ULD 599\nCHARGEIDESGRIPTION Units / iis rAmount{(Rs}))\nMonthly Rental \u2014 BT Combo ULD 599 _\u2014 599.00\nLocal Calls (included in plan) 0 Mins 0.00\nSTD Calls 45 Mins 67.50\nISD Calls 0 Mins 0.00\nBroadband Charges (if bundled) \u2014 0.00\nGST @ 18% \u2014 120.15\nPrevious Arrears _\u2014 0.00\nLate Payment Surcharge _\u2014 0.00\nTOVAL AMOUNT DUS RSSe786'65\nAmount in words: Rupees Seven Hundred Eighty Six and Sixty Five Paise Only\nCo",
+  "status": "EXTRACTED"
+}

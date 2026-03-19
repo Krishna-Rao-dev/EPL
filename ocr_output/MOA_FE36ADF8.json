@@ -1,0 +1,39 @@
+{
+  "doc_id": "FE36ADF8",
+  "doc_type": "MOA",
+  "source_file": "05_MOA.pdf",
+  "extracted_at": "2026-03-17T14:16:58.242701",
+  "fields": {
+    "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+    "cin": "G123456",
+    "state": "Tamil Nadu",
+    "address": "No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018",
+    "pincode": "600018",
+    "authorized_capital": "2500000",
+    "main_objects": [
+      "To carry on the business of civil engineering, construction and contracting of all kinds, including residential, commercial buildings, roads, bridges, dams and infrastructure.",
+      "To purchase, take on lease or otherwise acquire lands, buildings and property.",
+      "To carry on the business of real estate developers and builders.",
+      "To undertake development of townships, housing colonies and residential complexes.",
+      "To act as project management consultants for construction projects."
+    ],
+    "subscribers": [
+      {
+        "name": "D MANIKANDAN",
+        "shares": "50000"
+      },
+      {
+        "name": "S RAJESHWARI K SELVAKUMAR",
+        "shares": "50000"
+      }
+    ]
+  },
+  "cross_check": {
+    "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+    "address": "No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018",
+    "pincode": "600018",
+    "cin": "G123456"
+  },
+  "ocr_raw_text": "MTOR MDUM OF eden) COMPANIES AGT, 2018\nGIN: UAGAODTIRIEFTCTZE4ES | MANTCANDAN CONSTRUCTIONS FYT LID\nMEMORANDUM OF ASSOCIATION\n[Section 4, Companies Act 2013 | Rule 13, Companies (Incorporation) Rules 2014]\nGLAVES I\u2014NANE\nThe name of the Company is MANIKANDAN CONSTRUCTIONS PVT LTD\nGLAVES I\u2014 REGSTER=D GFHGE\nThe Registered Office of the Company will be situated in the State of Tamil Nadu.\nAddress: No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018\nPIN: 600018 | ROC: Registrar of Companies, Tamil Nadu, Chennai\n\u2018CIFAUSEIIIE OBJECT SIOFATHEIC OMPANY,\nMAIN OBJECTS:\n1. To carry on the business of civil engineering, construction and contracting of all kinds,\nincluding residential, commercial buildings, roads, bridges, dams and infrastructure.\n2. To purchase, take on lease or otherwise acquire lands, buildings and property.\n3. To carry on the business of real estate developers and builders.\n4. To undertake development of townships, housing colonies and residential complexes.\n5. To act ",
+  "status": "EXTRACTED"
+}

@@ -1,0 +1,252 @@
+[
+  {
+    "doc_id": "29BE211D",
+    "doc_type": "PAN_CARD",
+    "source_file": "01_Company_PAN_Card.png",
+    "extracted_at": "2026-03-17T14:16:05.083330",
+    "fields": {
+      "pan_number": "AKCM1234C",
+      "entity_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "date_of_reg": "15/04/2015",
+      "entity_type": "COMPANY",
+      "issuing_auth": "Income Tax Department"
+    },
+    "cross_check": {
+      "pan_number": "AKCM1234C",
+      "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD"
+    },
+    "ocr_raw_text": "(0/0 /010) (o(o [O10 (0/0 /010) (o(o/o/0/0)\n\n(GOVITOR INDIA)\nName\nMANIKANDAN CONSTRUCTIONS PVT LTD\nDate of Registration / Incorporation\n15/04/2015\nPermanent Account Number\n\nINCOME TAX\n\n4th character \u2018C' denotes \u2014 Company DEPARTMENT,\nFAKE DOCUMENTEEOR OCRiTESTING PURPOSES.ONLY]\n",
+    "status": "EXTRACTED"
+  },
+  {
+    "doc_id": "78C331B7",
+    "doc_type": "GST_CERTIFICATE",
+    "source_file": "02_GST_Certificate.pdf",
+    "extracted_at": "2026-03-17T14:16:19.093929",
+    "fields": {
+      "gstin": "15-char GSTIN",
+      "pan_number": "AAKCM1234C",
+      "legal_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "trade_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "state_code": "33",
+      "state": "Tamil Nadu",
+      "status": "ACTIVE",
+      "registration_date": "15/04/2015",
+      "constitution": "Private Limited Company",
+      "address": "No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018",
+      "pincode": "600018"
+    },
+    "cross_check": {
+      "pan_number": "AAKCM1234C",
+      "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "address": "No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018",
+      "pincode": "600018",
+      "gstin": "15-char GSTIN"
+    },
+    "ocr_raw_text": "GOVT.\nGOODS SERVICES or. GERIIACATE\nGovernmentioiindial IEMinistiwoiEinancell EEORMIGSIERE G06}\nCERTIFICATE OF REGISTRATION\n[See Rule 10(1) of the CGST Rules, 2017]\nGSTIN (Goods and Services Tax Identification Number)\nNEC URATTON DEWNLS\nLegal Name of Business : MANIKANDAN CONSTRUCTIONS PVT LTD\nTrade Name : MANIKANDAN CONSTRUCTIONS PVT LTD\nConstitution of Business : Private Limited Company\nPAN : AAKCM1234C\nDate of Liability : 15/04/2015\nType of Registration : Regular\nPeriod of Validity : 15/04/2015 to Till Cancelled\nNature of Business Activity : Construction of Buildings / Civil Engineering\nStatus : ACTIVE\nFINGAL FLAGS OF BUSES\nAddress Line 1 : No. 14, Second Floor, Anna Salai\nAddress Line 2 : Teynampet, Chennai - 600018\nPIN Code : 600018\nState : Tamil Nadu | State Code: 33\nAAPPROVINGYAUTHORITY,\nDesignation : Assistant Commissioner, CGST, Chennai South\nCentre Jurisdiction : Range: Anna Salai, Division: Chennai South\nState Jurisdiction : State: Tamil Nadu, Zone: Chennai\nDate of Issue : 2",
+    "status": "EXTRACTED"
+  },
+  {
+    "doc_id": "4B80522C",
+    "doc_type": "LEI_CERTIFICATE",
+    "source_file": "03_LEI_Certificate.pdf",
+    "extracted_at": "2026-03-17T14:16:31.050956",
+    "fields": {
+      "lei_code": "20-char LEI",
+      "legal_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "cin": "U45200TN2015PTC123456",
+      "pan_number": "AAKCM1234C",
+      "status": "ACTIVE",
+      "registration_date": "20/04/2015",
+      "renewal_date": "01/04/2025",
+      "issuing_lou": "CRISIL Limited \u2014 LE] Issuer, India",
+      "country": "India"
+    },
+    "cross_check": {
+      "pan_number": "AAKCM1234C",
+      "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "cin": "U45200TN2015PTC123456"
+    },
+    "ocr_raw_text": "GOVT.\nLEGAL Euiry aassres| in)rsasoraanerss\nGioia! Legal Guitiy vtenititer Reomdatiion ELENF) () Inca LE) issuer GRISIL\nLEI REGISTRATION CERTIFICATE\n[Issued under ISO 17442 Standard | Endorsed by Financial Stability Board]\nLEI CODE (Legal Entity Identifier \u2014 20 Characters)\nENUNY DERALS\nLegal Name : MANIKANDAN CONSTRUCTIONS PVT LTD\nLegal Form : Private Limited Company\nJurisdiction : India\nRegistration Authority : Registrar of Companies, Tamil Nadu\nRegistration Number (CIN) : U45200TN2015PTC123456\nPAN : AAKCM1234C\nGSTIN : 33AAKCM1234C1ZP\nREGISTEREDJADDRESS\nAddress : No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018\nCity : Chennai\nState : Tamil Nadu\nCountry : India\nPIN Code : 600018\nNECSURATTON Sis\nLEI Status : ACTIVE\nInitial Registration : 20/04/2015\nLast Update : 01/04/2024\nNext Renewal Date : 01/04/2025\nIssuing LOU : CRISIL Limited \u2014 LE] Issuer, India\nCorroboration Level : FULLY_CORROBORATED\nSTATUS : ACTIVE |\nVerify at: https:/www.gleif.org/ei | FAKE DOCUMENT \u2014 FOR OCR TEST",
+    "status": "EXTRACTED"
+  },
+  {
+    "doc_id": "474381E8",
+    "doc_type": "INCORPORATION_CERTIFICATE",
+    "source_file": "04_Certificate_of_Incorporation.pdf",
+    "extracted_at": "2026-03-17T14:16:43.147216",
+    "fields": {
+      "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "cin": "U45200TN2015PTC123456",
+      "pan_number": "AAKCM1234C",
+      "date_of_incorp": "15/04/2015",
+      "company_type": "Company Limited by Shares, Non-Government Company",
+      "authorized_capital": "Rs. 25,00,000/- (Twenty Five Lakhs)",
+      "state": "Tamil Nadu",
+      "roc": "Chennai",
+      "address": "",
+      "pincode": ""
+    },
+    "cross_check": {
+      "pan_number": "AAKCM1234C",
+      "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "cin": "U45200TN2015PTC123456"
+    },
+    "ocr_raw_text": "MINISTRY OF\nCORP AFFAIRS\nMINISTRY OF CORPORATE AFFAIRS \u2014 GOVERNMENT OF INDIA\nREGISTRAR OF COMPANIES, TAMIL NADU, CHENNAI\n[Pursuant to Section 7(2) of the Companies Act, 2013]\n| hereby certify that\nMANIKANDAN CONSTRUCTIONS PVT LTD\nis this day incorporated under the Companies Act, 2013\nand that the company is LIMITED.\nCorporate Identity Number (CIN) : U45200TN2015PTC123456\nPAN of Company : AAKCM1234C\nDate of Incorporation : 15/04/2015\nType of Company : Company Limited by Shares\nSub Category : Non-Government Company\nAuthorized Capital : Rs. 25,00,000/- (Twenty Five Lakhs)\nRegistered State : Tamil Nadu\nROC : Chennai\nGiven under my hand at Chennai this Fifteenth day of April, Two Thousand Fifteen.\nOFFICE SEAL For Registrar of Companies\nROG \u2014 CHENNAI Tamil Nadu, Chennai\nVerify at: www.mca.gov.in | FAKE DOCUMENT \u2014 FOR OCR TESTING ONLY\nIMC AMIECINAU45200 IN201 5B e1 23456]\n",
+    "status": "EXTRACTED"
+  },
+  {
+    "doc_id": "FE36ADF8",
+    "doc_type": "MOA",
+    "source_file": "05_MOA.pdf",
+    "extracted_at": "2026-03-17T14:16:58.242701",
+    "fields": {
+      "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "cin": "G123456",
+      "state": "Tamil Nadu",
+      "address": "No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018",
+      "pincode": "600018",
+      "authorized_capital": "2500000",
+      "main_objects": [
+        "To carry on the business of civil engineering, construction and contracting of all kinds, including residential, commercial buildings, roads, bridges, dams and infrastructure.",
+        "To purchase, take on lease or otherwise acquire lands, buildings and property.",
+        "To carry on the business of real estate developers and builders.",
+        "To undertake development of townships, housing colonies and residential complexes.",
+        "To act as project management consultants for construction projects."
+      ],
+      "subscribers": [
+        {
+          "name": "D MANIKANDAN",
+          "shares": "50000"
+        },
+        {
+          "name": "S RAJESHWARI K SELVAKUMAR",
+          "shares": "50000"
+        }
+      ]
+    },
+    "cross_check": {
+      "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "address": "No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018",
+      "pincode": "600018",
+      "cin": "G123456"
+    },
+    "ocr_raw_text": "MTOR MDUM OF eden) COMPANIES AGT, 2018\nGIN: UAGAODTIRIEFTCTZE4ES | MANTCANDAN CONSTRUCTIONS FYT LID\nMEMORANDUM OF ASSOCIATION\n[Section 4, Companies Act 2013 | Rule 13, Companies (Incorporation) Rules 2014]\nGLAVES I\u2014NANE\nThe name of the Company is MANIKANDAN CONSTRUCTIONS PVT LTD\nGLAVES I\u2014 REGSTER=D GFHGE\nThe Registered Office of the Company will be situated in the State of Tamil Nadu.\nAddress: No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018\nPIN: 600018 | ROC: Registrar of Companies, Tamil Nadu, Chennai\n\u2018CIFAUSEIIIE OBJECT SIOFATHEIC OMPANY,\nMAIN OBJECTS:\n1. To carry on the business of civil engineering, construction and contracting of all kinds,\nincluding residential, commercial buildings, roads, bridges, dams and infrastructure.\n2. To purchase, take on lease or otherwise acquire lands, buildings and property.\n3. To carry on the business of real estate developers and builders.\n4. To undertake development of townships, housing colonies and residential complexes.\n5. To act ",
+    "status": "EXTRACTED"
+  },
+  {
+    "doc_id": "25736CF8",
+    "doc_type": "AOA",
+    "source_file": "06_AOA.pdf",
+    "extracted_at": "2026-03-17T14:17:10.252572",
+    "fields": {
+      "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "cin": "",
+      "authorized_capital": "2500000",
+      "min_directors": "2",
+      "max_directors": "15",
+      "directors": [
+        {
+          "name": "D MANIKANDAN",
+          "din": "06712345"
+        },
+        {
+          "name": "S RAJESHWARI",
+          "din": "07823456"
+        }
+      ]
+    },
+    "cross_check": {
+      "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD"
+    },
+    "ocr_raw_text": "GOVT.\nARVIGLES OF coer PANIES ACT, 2018\nGIN UAAOTIRMIEPTCIA4ES |) MANTCANDAN CONSTRUCTIONS PVT LTD\nARTICLES OF ASSOCIATION\n[Section 5, Companies Act 2013 | Table F of Schedule 1]\nOF MANIKANDAN CONSTRUCTIONS PVT LTD\nARIIGLE 1 \u2014 IE FREATION\n1.1.'Act' means the Companies Act, 2013. \u2018Company\u2019 means MANIKANDAN CONSTRUCTIONS PVT LTD.\n1.2.'Directors' means the Directors for the time being of the Company.\nARTICLE 2\u2014 GARE GARTAL\n2.1. Authorized Capital: Rs. 25,00,000/- divided into 2,50,000 Equity Shares of Rs. 10/- each.\n2.2. The Company may issue shares at par, at a premium, or at a discount as per the Act.\n2.3. Every share shall be distinguished by its appropriate number.\nARIIGLE S\u2014 TRANSFER OF SHARES\n3.1. Transfer shall be executed by or on behalf of both the transferor and transferee in\nwriting.\n3.2. The Board may, in its absolute discretion, refuse to register any proposed transfer.\n3.3. No transfer shall be made to a minor or person of unsound mind.\nARIIGLE A\u2014 BOARD GF DINECTIORS\n4.1. Fi",
+    "status": "EXTRACTED"
+  },
+  {
+    "doc_id": "096EDE48",
+    "doc_type": "REGISTERED_ADDRESS",
+    "source_file": "07_Registered_Address_INC22.pdf",
+    "extracted_at": "2026-03-17T14:17:24.917415",
+    "fields": {
+      "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "cin": "U45200TN2015PTC123456",
+      "pan_number": "AAKCM1234C",
+      "gstin": "33AAKCM1234C1ZP",
+      "lei": "335800AAKCM12345678X",
+      "address_line1": "No. 14, Second Floor",
+      "address_line2": "Anna Salai (Mount Road)",
+      "area": "Teynampet",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "pincode": "600018",
+      "srn": "A12345678",
+      "filing_date": "15/04/2015",
+      "approval_date": "18/04/2015",
+      "status": "APPROVED"
+    },
+    "cross_check": {
+      "pan_number": "AAKCM1234C",
+      "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "address": "No. 14, Second Floor Anna Salai (Mount Road)",
+      "pincode": "600018",
+      "cin": "U45200TN2015PTC123456",
+      "gstin": "33AAKCM1234C1ZP"
+    },
+    "ocr_raw_text": "MINISURY OF CORO er | RON ING\nNetico of Sinetion /Changeei Registered\nCERTIFICATE OF REGISTERED OFFICE ADDRESS\n[Section 12(2), Companies Act 2013 | Form INC-22]\nSSCuION A\u2014Conirnanh\u2019 PARITOULARS\nCorporate Identity Number (CIN) : U45200TN2015PTC123456\nName of the Company : MANIKANDAN CONSTRUCTIONS PVT LTD\nPAN of Company : AAKCM1234C\nGSTIN : 33AAKCM1234C1ZP\nLEI : 335800AAKCM12345678X\nDate of Incorporation : 15/04/2015\nRegistrar of Companies : Registrar of Companies, Tamil Nadu, Chennai\nEmail Address : info@manikandanconstructions.in\nPhone Number : 044-28140055\nSECTION|IBE IJREGISTEREDIOFFICEYTADDRESS\nBuilding / Flat No. : No. 14, Second Floor\nStreet / Road : Anna Salai (Mount Road)\nArea / Locality : Teynampet\nCity / Town : Chennai\nDistrict : Chennai\nState : Tamil Nadu\nPIN Code : 600018\nCountry : India\nSECTIONICE SPROOHORADDRESSISUBMITITED\nDocument Type : Electricity Bill (TANGEDCO)\nConsumer Number : 33-4892-0045-001\nBill Date : 20/11/2024\nName on Bill : MANIKANDAN CONSTRUCTIONS PVT LTD\nAd",
+    "status": "EXTRACTED"
+  },
+  {
+    "doc_id": "1A9F10D2",
+    "doc_type": "ELECTRICITY_BILL",
+    "source_file": "08_Electricity_Bill.pdf",
+    "extracted_at": "2026-03-17T14:17:38.171908",
+    "fields": {
+      "consumer_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "consumer_number": "33-4892-0045-001",
+      "discom": "TAMIL NADU GENERATION AND SAIBE MI CORPORATION LID (LANEGEDEO)",
+      "address": "No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018",
+      "pincode": "600018",
+      "bill_number": "TNEB/CHN/2024/NOV/88234",
+      "bill_date": "20/11/2024",
+      "due_date": "05/12/2024",
+      "billing_period": "NOV 2024",
+      "units_consumed": "552",
+      "total_amount": "4693.70",
+      "connection_type": "Commercial"
+    },
+    "cross_check": {
+      "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "address": "No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018",
+      "pincode": "600018"
+    },
+    "ocr_raw_text": "TAMIL NADU GENERATION AND sabe mi CORPORATION LID (LANEGEDEO)\nELECTNIGIY ALL \u2014 COMVMERGAL GONNECTION |) Ghemei South Division\nBill No: TNEB/CHN/2024/NOV/88234 Bill Date: 20/11/2024 Due Date: 05/12/2024 Period: NOV 2024\nCONSUMER DETAILS METER READING\nConsumer No: 33-4892-0045-001 Previous Reading: 12,340 Units (20/10/2024)\nName: MANIKANDAN CONSTRUCTIONS PVT LTD Present Reading: 12,892 Units (20/1 1/2024)\nAddress: No. 14, Second Floor, Anna Salai Units Consumed: 552 Units\nTeynampet, Chennai - 600018 Multiplying Factor: 1\nBILISDESCRIPTION fAmounty(Rs:)]\nEnergy Charges (552 units @ Rs. 6.50/unit) 3,588.00\nFixed Charges (Commercial 15KW) 450.00\nElectricity Duty @ 15% 605.70\nMeter Rent 50.00\nPrevious Arrears 0.00\nSurcharge 0.00\nTOVAL AMOUNT DUE RS 4C8.70\nAmount in words: Rupees Four Thousand Six Hundred Ninety Three and Seventy Paise Only\nPAYMENT OPTIONS ;\nOnline: www.tangedco.gov.in | NEFT/RTGS | TANGEDCO Customer Service Centre\nPhone: 1912 (Helpline) | Email: helpdesk@tangedco.gov.in\nFAKE ",
+    "status": "EXTRACTED"
+  },
+  {
+    "doc_id": "1440BB77",
+    "doc_type": "TELEPHONE_BILL",
+    "source_file": "09_Telephone_Landline_Bill.pdf",
+    "extracted_at": "2026-03-17T14:17:52.000199",
+    "fields": {
+      "account_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "account_number": "TN-CHN-044-28140055",
+      "telephone_number": "044-28140055",
+      "provider": "Chennai Telephones",
+      "address": "No. 14, Second Floor, Anna Salai Teynampet, Chennai - 600018",
+      "pincode": "600018",
+      "bill_number": "BSNL/CHN/LL/2024/NOV/44512",
+      "bill_date": "25/11/2024",
+      "due_date": "10/12/2024",
+      "billing_period": "NOV 2024",
+      "total_amount": "786.65",
+      "connection_type": "Landline \u2014 Commercial (BT Basic)"
+    },
+    "cross_check": {
+      "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "address": "No. 14, Second Floor, Anna Salai Teynampet, Chennai - 600018",
+      "pincode": "600018"
+    },
+    "ocr_raw_text": "EUARAIT cael i ah FIMITED]KBSNIB)\nTELEPHONE HILL \u2014 LANDLINE CONNECTION (| Chennai Teleshtenss\nBill No: BSNL/CHN/LL/2024/NOV/44512 Bill Date: 25/11/2024 Due Date: 10/12/2024 Period: NOV 2024\n| ACCOUNT & CONNECTION DETAILS .\nAccount Number: TN-CHN-044-28140055\nTelephone Number: 044-28140055\nConnection Type: Landline \u2014 Commercial (BT Basic)\nAccount Name: MANIKANDAN CONSTRUCTIONS PVT LTD\nBilling Address: No. 14, Second Floor, Anna Salai\nTeynampet, Chennai - 600018\nPIN Code: 600018\n| Circle: Chennai Telephones .\n\u201cCustomer ID: BSNL-CID-20150420-8812 ,\nConnection Date: 20/04/2015\nPlan: BT Combo ULD 599\nCHARGEIDESGRIPTION Units / iis rAmount{(Rs}))\nMonthly Rental \u2014 BT Combo ULD 599 _\u2014 599.00\nLocal Calls (included in plan) 0 Mins 0.00\nSTD Calls 45 Mins 67.50\nISD Calls 0 Mins 0.00\nBroadband Charges (if bundled) \u2014 0.00\nGST @ 18% \u2014 120.15\nPrevious Arrears _\u2014 0.00\nLate Payment Surcharge _\u2014 0.00\nTOVAL AMOUNT DUS RSSe786'65\nAmount in words: Rupees Seven Hundred Eighty Six and Sixty Five Paise Only\nCo",
+    "status": "EXTRACTED"
+  }
+]

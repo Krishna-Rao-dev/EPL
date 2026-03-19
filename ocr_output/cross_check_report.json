@@ -1,0 +1,119 @@
+{
+  "passed": [
+    {
+      "parameter": "Company Name",
+      "value": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "docs": [
+        "PAN_CARD",
+        "GST_CERTIFICATE",
+        "LEI_CERTIFICATE",
+        "INCORPORATION_CERTIFICATE",
+        "MOA",
+        "AOA",
+        "REGISTERED_ADDRESS",
+        "ELECTRICITY_BILL",
+        "TELEPHONE_BILL"
+      ]
+    },
+    {
+      "parameter": "Pincode",
+      "value": "600018",
+      "docs": [
+        "GST_CERTIFICATE",
+        "REGISTERED_ADDRESS",
+        "ELECTRICITY_BILL",
+        "TELEPHONE_BILL"
+      ]
+    }
+  ],
+  "failed": [
+    {
+      "parameter": "PAN Number",
+      "majority_value": "AAKCM1234C",
+      "inconsistent_docs": [
+        "PAN_CARD"
+      ],
+      "inconsistent_values": [
+        "AKCM1234C"
+      ],
+      "all_values": {
+        "PAN_CARD": "AKCM1234C",
+        "GST_CERTIFICATE": "AAKCM1234C",
+        "LEI_CERTIFICATE": "AAKCM1234C",
+        "INCORPORATION_CERTIFICATE": "AAKCM1234C",
+        "REGISTERED_ADDRESS": "AAKCM1234C"
+      }
+    },
+    {
+      "parameter": "CIN",
+      "majority_value": "U45200TN2015PTC123456",
+      "inconsistent_docs": [
+        "MOA"
+      ],
+      "inconsistent_values": [
+        "G123456"
+      ],
+      "all_values": {
+        "LEI_CERTIFICATE": "U45200TN2015PTC123456",
+        "INCORPORATION_CERTIFICATE": "U45200TN2015PTC123456",
+        "MOA": "G123456",
+        "REGISTERED_ADDRESS": "U45200TN2015PTC123456"
+      }
+    },
+    {
+      "parameter": "GSTIN",
+      "majority_value": "15-char GSTIN",
+      "inconsistent_docs": [
+        "REGISTERED_ADDRESS"
+      ],
+      "inconsistent_values": [
+        "33AAKCM1234C1ZP"
+      ],
+      "all_values": {
+        "GST_CERTIFICATE": "15-char GSTIN",
+        "REGISTERED_ADDRESS": "33AAKCM1234C1ZP"
+      }
+    },
+    {
+      "parameter": "Address",
+      "majority_value": "No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018",
+      "inconsistent_docs": [
+        "REGISTERED_ADDRESS",
+        "TELEPHONE_BILL"
+      ],
+      "inconsistent_values": [
+        "No. 14, Second Floor Anna Salai (Mount Road)",
+        "No. 14, Second Floor, Anna Salai Teynampet, Chennai - 600018"
+      ],
+      "all_values": {
+        "GST_CERTIFICATE": "No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018",
+        "REGISTERED_ADDRESS": "No. 14, Second Floor Anna Salai (Mount Road)",
+        "ELECTRICITY_BILL": "No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018",
+        "TELEPHONE_BILL": "No. 14, Second Floor, Anna Salai Teynampet, Chennai - 600018"
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "parameter": "Pincode",
+      "missing_from": [
+        "INCORPORATION_CERTIFICATE"
+      ],
+      "issue": "Expected but not extracted \u2014 verify manually"
+    },
+    {
+      "parameter": "CIN",
+      "missing_from": [
+        "AOA"
+      ],
+      "issue": "Expected but not extracted \u2014 verify manually"
+    },
+    {
+      "parameter": "Address",
+      "missing_from": [
+        "INCORPORATION_CERTIFICATE"
+      ],
+      "issue": "Expected but not extracted \u2014 verify manually"
+    }
+  ]
+}
