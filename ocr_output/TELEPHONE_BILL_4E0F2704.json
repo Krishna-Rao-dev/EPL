@@ -1,8 +1,8 @@
 {
-  "doc_id": "1440BB77",
+  "doc_id": "4E0F2704",
   "doc_type": "TELEPHONE_BILL",
   "source_file": "09_Telephone_Landline_Bill.pdf",
-  "extracted_at": "2026-03-17T14:17:52.000199",
+  "extracted_at": "2026-03-30T14:18:26.253185",
   "fields": {
     "account_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
     "account_number": "TN-CHN-044-28140055",

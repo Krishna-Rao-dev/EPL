@@ -1,8 +1,8 @@
 {
-  "doc_id": "4B80522C",
+  "doc_id": "4F7F99C8",
   "doc_type": "LEI_CERTIFICATE",
   "source_file": "03_LEI_Certificate.pdf",
-  "extracted_at": "2026-03-17T14:16:31.050956",
+  "extracted_at": "2026-03-30T14:17:02.445491",
   "fields": {
     "lei_code": "20-char LEI",
     "legal_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",

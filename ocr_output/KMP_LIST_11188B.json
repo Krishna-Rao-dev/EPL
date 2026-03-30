@@ -1,0 +1,38 @@
+{
+  "doc_type": "KMP_LIST",
+  "source_file": "11_KMP_List.pdf",
+  "status": "EXTRACTED",
+  "fields": {
+    "company_name": "MANIKANDAN CONSTRUCTIONS FYT LID",
+    "kmps": [
+      {
+        "name": "D MANIKANDAN",
+        "designation": "Managing Director (MD)",
+        "id_numbers": "DIN: 06712345, PAN: BNZPM2501F",
+        "email": "md@manikandanconstructions.in",
+        "phone": "9884012345"
+      },
+      {
+        "name": "S RAJESHWARI",
+        "designation": "Whole-Time Director (WTD)",
+        "id_numbers": "DIN: 07823456, PAN: ZZZZR8765K",
+        "email": "wtd@manikandanconstructions.in",
+        "phone": "9884056789"
+      },
+      {
+        "name": "R SUBRAMANIAM",
+        "designation": "Chief Financial Officer (CFO)",
+        "id_numbers": "PAN: BBBCS4321A",
+        "email": "cfo@manikandanconstructions.in",
+        "phone": "9884099001"
+      },
+      {
+        "name": "M PRIYA",
+        "designation": "Company Secretary (CS)",
+        "id_numbers": "ACS No: A12345, PAN: CCCMP5678B",
+        "email": "cs@manikandanconstructions.in",
+        "phone": "9884077654"
+      }
+    ]
+  }
+}

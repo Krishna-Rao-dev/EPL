@@ -1,0 +1,131 @@
+{
+  "timestamp": "2026-03-30T14:19:49.841570",
+  "company": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+  "pan": "AAKCM1234C",
+  "risk_score": 40,
+  "risk_level": "MEDIUM",
+  "recommendation": "ENHANCED_DUE_DILIGENCE \u2014 Deeper investigation required before sanctioning.",
+  "flags": [
+    "RPT_RISK_HIGH",
+    "COMPLEX_ENTITY_STRUCTURE"
+  ],
+  "entity_graph": {
+    "nodes": 7,
+    "edges": 6
+  },
+  "ownership_chains": [
+    {
+      "person": "D MANIKANDAN",
+      "din": "106712345",
+      "pan": "BNZPM2501F",
+      "direct_pct": 50.0,
+      "indirect_pct": 0,
+      "total_pct": 50.0,
+      "indirect_chains": []
+    },
+    {
+      "person": "S RAJESHWARI",
+      "din": "07823456",
+      "pan": "ZZZRZ8765K",
+      "direct_pct": 50.0,
+      "indirect_pct": 0,
+      "total_pct": 50.0,
+      "indirect_chains": []
+    }
+  ],
+  "pep_check": {
+    "total_checked": 2,
+    "pep_found": 0,
+    "clean": 2,
+    "pep_persons": [],
+    "clean_persons": [
+      "D MANIKANDAN",
+      "S RAJESHWARI"
+    ],
+    "overall_flag": "CLEAR",
+    "source": "PEP_DECLARATION_DOCUMENT"
+  },
+  "rpt_analysis": {
+    "total_transactions": 2,
+    "flagged": [
+      {
+        "related_party": "RAJESH INFRA PVT LTD",
+        "risk_score": 65,
+        "risk_level": "HIGH",
+        "flags": [
+          "COMMON_DIRECTOR",
+          "SUB_CONTRACT",
+          "LARGE_AMOUNT"
+        ],
+        "amount": "Rs. 45,00,000",
+        "flag_reasons": [
+          "Common director between borrower and related party",
+          "Sub-contracting to related party",
+          "Transaction exceeds Rs. 25 Lakhs"
+        ]
+      },
+      {
+        "related_party": "DURAISAMY HOLDINGS",
+        "risk_score": 35,
+        "risk_level": "MEDIUM",
+        "flags": [
+          "BENEFICIAL_OWNER",
+          "INTER_CO_DEPOSIT"
+        ],
+        "amount": "Rs. 20,00,000",
+        "flag_reasons": [
+          "Beneficial owner with indirect stake",
+          "Inter-company deposit or loan"
+        ]
+      }
+    ],
+    "max_risk_score": 65,
+    "overall_risk": "HIGH"
+  },
+  "persons": [
+    {
+      "name": "D MANIKANDAN",
+      "role": "Managing Director",
+      "din": "106712345",
+      "pan": "BNZPM2501F",
+      "dob": "16/07/1986",
+      "address": "No.14, Anna Salai, Teynampet, Chennai - 600018",
+      "nationality": "Indian",
+      "shareholding": "50%",
+      "pep": false,
+      "sanctions": false,
+      "other_directorships": [
+        "RAJESH INFRA PVT LTD (Director since 2018)"
+      ],
+      "direct_pct": 50.0,
+      "indirect_pct": 0,
+      "total_pct": 50.0,
+      "risk_score": 30
+    },
+    {
+      "name": "S RAJESHWARI",
+      "role": "Whole-Time Director",
+      "din": "07823456",
+      "pan": "ZZZRZ8765K",
+      "dob": "22/03/1989",
+      "address": "No.28, T.Nagar, Chennai - 600017",
+      "nationality": "Indian",
+      "shareholding": "50%",
+      "pep": false,
+      "sanctions": false,
+      "other_directorships": [],
+      "direct_pct": 50.0,
+      "indirect_pct": 0,
+      "total_pct": 50.0,
+      "risk_score": 10
+    }
+  ],
+  "nlp_summary": [
+    "The company, MANIKANDAN CONSTRUCTIONS PVT LTD, has a complex ownership structure with two individuals, D MANIKANDAN and S RAJESHWARI, each holding 50% of the total ownership percentage.",
+    "There are two reported risk flags: 'COMMON_DIRECTOR' and 'SUB_CONTRACT', which indicate potential conflicts of interest or improper conduct related to directors and subcontracting activities.",
+    "Additionally, there is a 'BENEFICIAL_OWNER' flag associated with an 'INTER_CO_DEPOSIT' activity, suggesting possible misuse of funds between companies.",
+    "The risk report categorizes this application as HIGH, indicating significant risks that need careful consideration during the loan approval process.",
+    "Given the identified risks and the high-risk classification in the report, it is recommended to proceed with caution and conduct thorough due diligence before approving any loans for MANIKANDAN CONSTRUCTIONS PVT LTD."
+  ],
+  "compliance_verdict": "UNKNOWN"
+}

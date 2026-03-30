@@ -1,8 +1,8 @@
 {
-  "doc_id": "1A9F10D2",
+  "doc_id": "DB7B4760",
   "doc_type": "ELECTRICITY_BILL",
   "source_file": "08_Electricity_Bill.pdf",
-  "extracted_at": "2026-03-17T14:17:38.171908",
+  "extracted_at": "2026-03-30T14:18:10.872007",
   "fields": {
     "consumer_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
     "consumer_number": "33-4892-0045-001",

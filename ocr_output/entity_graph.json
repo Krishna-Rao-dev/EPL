@@ -1,0 +1,113 @@
+{
+  "nodes": [
+    {
+      "id": "MAIN_CO",
+      "label": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+      "type": "company",
+      "risk": "low",
+      "data": {
+        "pan": "AAKCM1234C",
+        "cin": "U45200TN2015PTC123456"
+      }
+    },
+    {
+      "id": "DIR_106712345",
+      "label": "D MANIKANDAN",
+      "type": "person",
+      "risk": "low",
+      "data": {
+        "din": "106712345",
+        "pan": "BNZPM2501F",
+        "dob": "16/07/1986",
+        "designation": "Managing Director"
+      }
+    },
+    {
+      "id": "CO_RAJESH_INFRA_PVT_L",
+      "label": "RAJESH INFRA PVT LTD",
+      "type": "company",
+      "risk": "medium",
+      "data": {
+        "note": "Cross-directorship"
+      }
+    },
+    {
+      "id": "DIR_07823456",
+      "label": "S RAJESHWARI",
+      "type": "person",
+      "risk": "low",
+      "data": {
+        "din": "07823456",
+        "pan": "ZZZRZ8765K",
+        "dob": "22/03/1989",
+        "designation": "Whole-Time Director"
+      }
+    },
+    {
+      "id": "ENT_DDDH7890C",
+      "label": "DURAISAMY HOLDINGS",
+      "type": "company",
+      "risk": "low",
+      "data": {
+        "pan": "DDDH7890C",
+        "relationship": "Beneficial Owner of D MANIKANDAN"
+      }
+    },
+    {
+      "id": "RPT_RAJESH_INFRA_PVT_L",
+      "label": "RAJESH INFRA PVT LTD",
+      "type": "company",
+      "risk": "medium",
+      "data": {
+        "rpt": true
+      }
+    },
+    {
+      "id": "RPT_DURAISAMY_HOLDINGS",
+      "label": "DURAISAMY HOLDINGS",
+      "type": "company",
+      "risk": "medium",
+      "data": {
+        "rpt": true
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "DIR_106712345",
+      "to": "MAIN_CO",
+      "label": "Director (50%)",
+      "type": "ownership"
+    },
+    {
+      "from": "DIR_106712345",
+      "to": "CO_RAJESH_INFRA_PVT_L",
+      "label": "Director",
+      "type": "directorship"
+    },
+    {
+      "from": "DIR_07823456",
+      "to": "MAIN_CO",
+      "label": "Director (50%)",
+      "type": "ownership"
+    },
+    {
+      "from": "ENT_DDDH7890C",
+      "to": "MAIN_CO",
+      "label": "Owns 20%",
+      "type": "ownership"
+    },
+    {
+      "from": "MAIN_CO",
+      "to": "RPT_RAJESH_INFRA_PVT_L",
+      "label": "Sub-contracting of civil works",
+      "type": "financial"
+    },
+    {
+      "from": "MAIN_CO",
+      "to": "RPT_DURAISAMY_HOLDINGS",
+      "label": "Inter-company deposit",
+      "type": "financial"
+    }
+  ]
+}

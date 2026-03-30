@@ -1,0 +1,28 @@
+{
+  "doc_type": "RPT_DOCUMENT",
+  "source_file": "14_RPT_Related_Party_Transactions.pdf",
+  "status": "EXTRACTED",
+  "fields": {
+    "company_name": "",
+    "related_party_transactions": [
+      {
+        "related_party": "RAJESH INFRA PVT LTD",
+        "relationship": "D MANIKANDAN is Director in both companies",
+        "transaction_type": "Sub-contracting of civil works",
+        "amount": "Rs. 45,00,000",
+        "terms": "At arms length, prevailing market rate",
+        "approval": "Board approval obtained on 01/04/2024",
+        "risk_flag": "MONITOR \u2014 common director, potential fund diversion risk"
+      },
+      {
+        "related_party": "DURAISAMY HOLDINGS",
+        "relationship": "D MANIKANDAN is Beneficial Owner; holds 20% indirect stake in subject company",
+        "transaction_type": "Inter-company deposit",
+        "amount": "Rs. 20,00,000",
+        "terms": "At arms length, 8% per annum",
+        "approval": "Shareholder approval obtained at EGM dated 15/03/2024",
+        "risk_flag": "LOW \u2014 standard holding company deposit, arms length"
+      }
+    ]
+  }
+}

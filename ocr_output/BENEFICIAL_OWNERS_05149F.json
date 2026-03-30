@@ -1,0 +1,34 @@
+{
+  "doc_type": "BENEFICIAL_OWNERS",
+  "source_file": "12_Beneficial_Owners.pdf",
+  "status": "EXTRACTED",
+  "fields": {
+    "company_name": "",
+    "ubos": [
+      {
+        "name": "D MANIKANDAN",
+        "pan": "BNZPM2501F",
+        "direct_holding": "50%",
+        "indirect_holding": "20%",
+        "total_effective": "70%",
+        "nature": "Direct + Indirect Beneficial Owner"
+      },
+      {
+        "name": "S RAJESHWARI",
+        "pan": "ZZZR8765K",
+        "direct_holding": "50%",
+        "indirect_holding": "",
+        "total_effective": "50%",
+        "nature": "Direct Beneficial Owner"
+      }
+    ],
+    "related_entities": [
+      {
+        "name": "DURAISAMY HOLDINGS",
+        "pan": "DDDH7890C",
+        "relationship": "Beneficial Owner of D MANIKANDAN",
+        "ownership_pct": "20%"
+      }
+    ]
+  }
+}

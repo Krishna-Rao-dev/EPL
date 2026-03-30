@@ -1,8 +1,8 @@
 {
-  "doc_id": "78C331B7",
+  "doc_id": "F1690D35",
   "doc_type": "GST_CERTIFICATE",
   "source_file": "02_GST_Certificate.pdf",
-  "extracted_at": "2026-03-17T14:16:19.093929",
+  "extracted_at": "2026-03-30T14:16:50.882083",
   "fields": {
     "gstin": "15-char GSTIN",
     "pan_number": "AAKCM1234C",
