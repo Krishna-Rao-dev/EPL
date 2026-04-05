@@ -1,0 +1,33 @@
+{
+  "doc_id": "12413967",
+  "doc_type": "REGISTERED_ADDRESS",
+  "source_file": "07_Registered_Address_INC22.pdf",
+  "extracted_at": "2026-04-04T19:33:43.387426",
+  "fields": {
+    "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+    "cin": "U45200TN2015PTC123456",
+    "pan_number": "AAKCM1234C",
+    "gstin": "33AAKCM1234C1ZP",
+    "lei": "335800AAKCM12345678X",
+    "address_line1": "No. 14, Second Floor",
+    "address_line2": "Anna Salai (Mount Road)",
+    "area": "Teynampet",
+    "city": "Chennai",
+    "state": "Tamil Nadu",
+    "pincode": "600018",
+    "srn": "A12345678",
+    "filing_date": "15/04/2015",
+    "approval_date": "18/04/2015",
+    "status": "APPROVED"
+  },
+  "cross_check": {
+    "pan_number": "AAKCM1234C",
+    "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+    "address": "No. 14, Second Floor Anna Salai (Mount Road)",
+    "pincode": "600018",
+    "cin": "U45200TN2015PTC123456",
+    "gstin": "33AAKCM1234C1ZP"
+  },
+  "ocr_raw_text": "MINISURY OF CORO er | RON ING\nNetico of Sinetion /Changeei Registered\nCERTIFICATE OF REGISTERED OFFICE ADDRESS\n[Section 12(2), Companies Act 2013 | Form INC-22]\nSSCuION A\u2014Conirnanh\u2019 PARITOULARS\nCorporate Identity Number (CIN) : U45200TN2015PTC123456\nName of the Company : MANIKANDAN CONSTRUCTIONS PVT LTD\nPAN of Company : AAKCM1234C\nGSTIN : 33AAKCM1234C1ZP\nLEI : 335800AAKCM12345678X\nDate of Incorporation : 15/04/2015\nRegistrar of Companies : Registrar of Companies, Tamil Nadu, Chennai\nEmail Address : info@manikandanconstructions.in\nPhone Number : 044-28140055\nSECTION|IBE IJREGISTEREDIOFFICEYTADDRESS\nBuilding / Flat No. : No. 14, Second Floor\nStreet / Road : Anna Salai (Mount Road)\nArea / Locality : Teynampet\nCity / Town : Chennai\nDistrict : Chennai\nState : Tamil Nadu\nPIN Code : 600018\nCountry : India\nSECTIONICE SPROOHORADDRESSISUBMITITED\nDocument Type : Electricity Bill (TANGEDCO)\nConsumer Number : 33-4892-0045-001\nBill Date : 20/11/2024\nName on Bill : MANIKANDAN CONSTRUCTIONS PVT LTD\nAd",
+  "status": "EXTRACTED"
+}

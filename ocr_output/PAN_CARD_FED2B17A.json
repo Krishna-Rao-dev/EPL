@@ -1,0 +1,19 @@
+{
+  "doc_id": "FED2B17A",
+  "doc_type": "PAN_CARD",
+  "source_file": "01_Company_PAN_Card.png",
+  "extracted_at": "2026-04-04T19:32:36.808201",
+  "fields": {
+    "pan_number": "AKCM1234C",
+    "entity_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+    "date_of_reg": "15/04/2015",
+    "entity_type": "COMPANY",
+    "issuing_auth": "Income Tax Department"
+  },
+  "cross_check": {
+    "pan_number": "AKCM1234C",
+    "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD"
+  },
+  "ocr_raw_text": "(0/0 /010) (o(o [O10 (0/0 /010) (o(o/o/0/0)\n\n(GOVITOR INDIA)\nName\nMANIKANDAN CONSTRUCTIONS PVT LTD\nDate of Registration / Incorporation\n15/04/2015\nPermanent Account Number\n\nINCOME TAX\n\n4th character \u2018C' denotes \u2014 Company DEPARTMENT,\nFAKE DOCUMENTEEOR OCRiTESTING PURPOSES.ONLY]\n",
+  "status": "EXTRACTED"
+}

@@ -1,0 +1,24 @@
+{
+  "doc_type": "PEP_DECLARATION",
+  "source_file": "13_PEP_Declaration.pdf",
+  "status": "EXTRACTED",
+  "fields": {
+    "company_name": "MANIKANDAN CONSTRUCTIONS FYT LID",
+    "declarations": [
+      {
+        "name": "D MANIKANDAN",
+        "designation": "Managing Director",
+        "pep_status": "NOT A PEP",
+        "family_pep": "No immediate family member holds or has held a prominent public function",
+        "associate_pep": "No close associate is a Politically Exposed Person"
+      },
+      {
+        "name": "S RAJESHWARI",
+        "designation": "Whole-Time Director",
+        "pep_status": "NOT A PEP",
+        "family_pep": "No immediate family member holds or has held a prominent public function",
+        "associate_pep": "No close associate is a Politically Exposed Person"
+      }
+    ]
+  }
+}

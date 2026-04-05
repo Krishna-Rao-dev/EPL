@@ -1,0 +1,24 @@
+{
+  "doc_id": "1FBB9513",
+  "doc_type": "LEI_CERTIFICATE",
+  "source_file": "03_LEI_Certificate.pdf",
+  "extracted_at": "2026-04-04T19:32:57.376422",
+  "fields": {
+    "lei_code": "20-char LEI",
+    "legal_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+    "cin": "U45200TN2015PTC123456",
+    "pan_number": "AAKCM1234C",
+    "status": "ACTIVE",
+    "registration_date": "20/04/2015",
+    "renewal_date": "01/04/2025",
+    "issuing_lou": "CRISIL Limited \u2014 LE] Issuer, India",
+    "country": "India"
+  },
+  "cross_check": {
+    "pan_number": "AAKCM1234C",
+    "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+    "cin": "U45200TN2015PTC123456"
+  },
+  "ocr_raw_text": "GOVT.\nLEGAL Euiry aassres| in)rsasoraanerss\nGioia! Legal Guitiy vtenititer Reomdatiion ELENF) () Inca LE) issuer GRISIL\nLEI REGISTRATION CERTIFICATE\n[Issued under ISO 17442 Standard | Endorsed by Financial Stability Board]\nLEI CODE (Legal Entity Identifier \u2014 20 Characters)\nENUNY DERALS\nLegal Name : MANIKANDAN CONSTRUCTIONS PVT LTD\nLegal Form : Private Limited Company\nJurisdiction : India\nRegistration Authority : Registrar of Companies, Tamil Nadu\nRegistration Number (CIN) : U45200TN2015PTC123456\nPAN : AAKCM1234C\nGSTIN : 33AAKCM1234C1ZP\nREGISTEREDJADDRESS\nAddress : No. 14, Second Floor, Anna Salai, Teynampet, Chennai - 600018\nCity : Chennai\nState : Tamil Nadu\nCountry : India\nPIN Code : 600018\nNECSURATTON Sis\nLEI Status : ACTIVE\nInitial Registration : 20/04/2015\nLast Update : 01/04/2024\nNext Renewal Date : 01/04/2025\nIssuing LOU : CRISIL Limited \u2014 LE] Issuer, India\nCorroboration Level : FULLY_CORROBORATED\nSTATUS : ACTIVE |\nVerify at: https:/www.gleif.org/ei | FAKE DOCUMENT \u2014 FOR OCR TEST",
+  "status": "EXTRACTED"
+}

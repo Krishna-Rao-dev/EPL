@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-30T14:18:28.253410",
+  "timestamp": "2026-04-04T19:34:09.654929",
   "checks": {
     "PAN Format": {
       "valid": false,
@@ -47,7 +47,12 @@
     "Pincode (Postal API)": {
       "verified": true,
       "pincode": "600018",
-      "note": "No internet \u2014 format check only",
+      "state": "Tamil Nadu",
+      "district": "Chennai",
+      "region": "Chennai Region",
+      "post_offices": 2,
+      "state_match": true,
+      "source": "INDIA_POSTAL_API",
       "critical": true
     },
     "PAN Active (Sandbox)": {
@@ -90,17 +95,17 @@
     "Electricity Bill Date": {
       "valid": false,
       "bill_date": "20/11/2024",
-      "age_days": 495,
+      "age_days": 500,
       "max_days": 90,
-      "message": "Bill is 495 days old \u2014 EXCEEDS 90-day limit",
+      "message": "Bill is 500 days old \u2014 EXCEEDS 90-day limit",
       "critical": false
     },
     "Telephone Bill Date": {
       "valid": false,
       "bill_date": "25/11/2024",
-      "age_days": 490,
+      "age_days": 495,
       "max_days": 90,
-      "message": "Bill is 490 days old \u2014 EXCEEDS 90-day limit",
+      "message": "Bill is 495 days old \u2014 EXCEEDS 90-day limit",
       "critical": false
     }
   },

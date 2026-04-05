@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-30T14:19:49.841570",
+  "timestamp": "2026-04-04T19:35:16.336353",
   "company": "MANIKANDAN CONSTRUCTIONS PVT LTD",
   "pan": "AAKCM1234C",
   "risk_score": 40,
@@ -15,18 +15,18 @@
   },
   "ownership_chains": [
     {
-      "person": "D MANIKANDAN",
-      "din": "106712345",
-      "pan": "BNZPM2501F",
+      "person": "S RAJESHWARI",
+      "din": "07823456",
+      "pan": "ZZZRZ8765K",
       "direct_pct": 50.0,
       "indirect_pct": 0,
       "total_pct": 50.0,
       "indirect_chains": []
     },
     {
-      "person": "S RAJESHWARI",
-      "din": "07823456",
-      "pan": "ZZZRZ8765K",
+      "person": "D MANIKANDAN",
+      "din": "106712345",
+      "pan": "BNZPM2501F",
       "direct_pct": 50.0,
       "indirect_pct": 0,
       "total_pct": 50.0,
@@ -121,11 +121,7 @@
     }
   ],
   "nlp_summary": [
-    "The company, MANIKANDAN CONSTRUCTIONS PVT LTD, has a complex ownership structure with two individuals, D MANIKANDAN and S RAJESHWARI, each holding 50% of the total ownership percentage.",
-    "There are two reported risk flags: 'COMMON_DIRECTOR' and 'SUB_CONTRACT', which indicate potential conflicts of interest or improper conduct related to directors and subcontracting activities.",
-    "Additionally, there is a 'BENEFICIAL_OWNER' flag associated with an 'INTER_CO_DEPOSIT' activity, suggesting possible misuse of funds between companies.",
-    "The risk report categorizes this application as HIGH, indicating significant risks that need careful consideration during the loan approval process.",
-    "Given the identified risks and the high-risk classification in the report, it is recommended to proceed with caution and conduct thorough due diligence before approving any loans for MANIKANDAN CONSTRUCTIONS PVT LTD."
+    "NLP summary failed: Extra data: line 2 column 1 (char 790). Review data manually."
   ],
   "compliance_verdict": "UNKNOWN"
 }

@@ -7,8 +7,8 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     # MongoDB
-    MONGO_URI: str = "mongodb+srv://krishna345542_db_user:sB3bRbmKP74oADrZ@test-cluster.we6hinm.mongodb.net/"
-    MONGO_DB: str = "Test-Cluster"
+    MONGO_URI: str = "mongodb://localhost:27017/"
+    MONGO_DB: str = "compliance_db"
 
     # JWT
     SECRET_KEY: str = "pramanik-super-secret-change-in-prod"
@@ -17,7 +17,7 @@ class Settings(BaseSettings):
 
     # Ollama / LLM
     OLLAMA_URL: str = "http://localhost:11434/api/generate"
-    OLLAMA_MODEL: str = "qwen2.5:3b"
+    OLLAMA_MODEL: str = "llama3.2:3b"
 
     # Sandbox PAN API  (real key you provided — swap here)
     SANDBOX_PAN_API_KEY: str = os.getenv("SANDBOX_PAN_API_KEY", "your-sandbox-key-here")
@@ -28,7 +28,7 @@ class Settings(BaseSettings):
     TESSERACT_CMD: str = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
     # Poppler (Linux default)
-    POPPLER_PATH: str | None = None
+    POPPLER_PATH: str = r"C:\poppler\poppler-25.12.0\Library\bin"
 
     class Config:
         env_file = ".env"

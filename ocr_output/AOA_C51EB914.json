@@ -1,0 +1,28 @@
+{
+  "doc_id": "C51EB914",
+  "doc_type": "AOA",
+  "source_file": "06_AOA.pdf",
+  "extracted_at": "2026-04-04T19:33:30.527312",
+  "fields": {
+    "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+    "cin": "",
+    "authorized_capital": "2500000",
+    "min_directors": "2",
+    "max_directors": "15",
+    "directors": [
+      {
+        "name": "D MANIKANDAN",
+        "din": "06712345"
+      },
+      {
+        "name": "S RAJESHWARI",
+        "din": "07823456"
+      }
+    ]
+  },
+  "cross_check": {
+    "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD"
+  },
+  "ocr_raw_text": "GOVT.\nARVIGLES OF coer PANIES ACT, 2018\nGIN UAAOTIRMIEPTCIA4ES |) MANTCANDAN CONSTRUCTIONS PVT LTD\nARTICLES OF ASSOCIATION\n[Section 5, Companies Act 2013 | Table F of Schedule 1]\nOF MANIKANDAN CONSTRUCTIONS PVT LTD\nARIIGLE 1 \u2014 IE FREATION\n1.1.'Act' means the Companies Act, 2013. \u2018Company\u2019 means MANIKANDAN CONSTRUCTIONS PVT LTD.\n1.2.'Directors' means the Directors for the time being of the Company.\nARTICLE 2\u2014 GARE GARTAL\n2.1. Authorized Capital: Rs. 25,00,000/- divided into 2,50,000 Equity Shares of Rs. 10/- each.\n2.2. The Company may issue shares at par, at a premium, or at a discount as per the Act.\n2.3. Every share shall be distinguished by its appropriate number.\nARIIGLE S\u2014 TRANSFER OF SHARES\n3.1. Transfer shall be executed by or on behalf of both the transferor and transferee in\nwriting.\n3.2. The Board may, in its absolute discretion, refuse to register any proposed transfer.\n3.3. No transfer shall be made to a minor or person of unsound mind.\nARIIGLE A\u2014 BOARD GF DINECTIORS\n4.1. Fi",
+  "status": "EXTRACTED"
+}

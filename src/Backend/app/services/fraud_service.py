@@ -3,6 +3,7 @@ Fraud Analysis Service
 Entity graph building, PEP screening, RPT analysis, risk score
 """
 from datetime import datetime
+from typing import Optional
 
 
 # ── Entity Graph Builder ──────────────────────────────────────
@@ -94,7 +95,9 @@ def build_entity_graph(
     return {"nodes": nodes, "edges": edges}
 
 
-def _name_match(label: str, name: str) -> bool:
+def _name_match(label: str, name: Optional[str]) -> bool:
+    if not name or not label: 
+        return False
     ln = label.replace("\n", " ").upper().strip()
     nm = name.upper().strip()
     return ln == nm or ln in nm or nm in ln

@@ -1,0 +1,34 @@
+{
+  "doc_type": "BOARD_OF_DIRECTORS",
+  "source_file": "10_Board_of_Directors.pdf",
+  "status": "EXTRACTED",
+  "fields": {
+    "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+    "cin": "U45200TN2015PTC123456",
+    "pan": "AAKCM1234C",
+    "directors": [
+      {
+        "name": "D MANIKANDAN",
+        "din": "106712345",
+        "pan": "BNZPM2501F",
+        "dob": "16/07/1986",
+        "designation": "Managing Director",
+        "shareholding": "50%",
+        "address": "No.14, Anna Salai, Teynampet, Chennai - 600018",
+        "nationality": "Indian",
+        "other_directorships": "RAJESH INFRA PVT LTD (Director since 2018)"
+      },
+      {
+        "name": "S RAJESHWARI",
+        "din": "07823456",
+        "pan": "ZZZRZ8765K",
+        "dob": "22/03/1989",
+        "designation": "Whole-Time Director",
+        "shareholding": "50%",
+        "address": "No.28, T.Nagar, Chennai - 600017",
+        "nationality": "Indian",
+        "other_directorships": ""
+      }
+    ]
+  }
+}
