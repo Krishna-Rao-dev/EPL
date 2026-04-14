@@ -16,38 +16,39 @@ class PANCardAgent(DocumentAgent):
     doc_type = "PAN_CARD"
 
     def _build_prompt(self, ocr_text: str) -> str:
-        return f"""You are reading OCR text from an Indian Company PAN Card issued by the Income Tax Department of India.
+        return f"""You are reading OCR extracted text from an Indian Company PAN Card issued by the Income Tax Department of India.
 
-WHAT THIS DOCUMENT LOOKS LIKE:
-- A small laminated card (like a credit card) with a light brown/beige background
-- Top center: "INCOME TAX DEPARTMENT" and "GOVT. OF INDIA"
-- The PAN number is printed in large bold font, usually near the middle or bottom
+THIS IS WHAT DOCUMENT CONTENT LOOKS LIKE:
+- PAN NUMBER IS MENTIONED LIKE
+- IT WILL BE VERY CLEARLY VISIBLE AND PROMINENTLY PLACED IN THE CARD
+- You would see number serial number which has some alphabets and numbers. This is the PAN number.
+- CONTAINS WORDS LIKE : "INCOME TAX DEPARTMENT" and "GOVT. OF INDIA"
 - Below the PAN: the entity/company name in capital letters
-- Below name: date field labeled "Date of Birth / Incorporation / Agreement / Partnership or Trust Deed / Formation of Body of Individuals / Association of Persons"
-- The 4th character of PAN indicates entity type: C=Company, P=Individual, H=HUF, F=Firm, T=Trust, B=BOI, A=AOP
+- The 4th character of PAN indicates entity type: C=Company.
 
 FIELD LOCATIONS ON CARD:
 - "Permanent Account Number" label → followed by the 10-character PAN code
-- Entity/company name printed directly below the PAN number
-- Date printed as DD/MM/YYYY below the name
+- Entity/company name printed around the PAN Number.
+- Date is in the format DD/MM/YYYY 
 - "INCOME TAX DEPARTMENT" at top = issuing authority
 
 Extract into this exact JSON (use null for missing):
 {{
-  "pan_number": "AAKCM1234C",
-  "entity_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
-  "date_of_reg": "15/03/2010",
+  "pan_number": "<extracted PAN number>",
+  "entity_name": "<extracted entity name>",
+  "date_of_reg": "<extracted date>",
   "entity_type": "COMPANY",
   "issuing_auth": "Income Tax Department"
 }}
 
 EXTRACTION RULES:
-- pan_number: EXACTLY 10 characters — 5 uppercase letters, 4 digits, 1 uppercase letter (e.g. AAKCM1234C). Reject anything not matching this pattern.
-- entity_name: the company/person name printed on the card, in CAPS
+- pan_number: EXACTLY 10 characters — 5 uppercase letters, 4 digits, 1 uppercase letter. Reject anything not matching this pattern.
+- entity_name: the company/person name printed on the card — this is used for KYC. Extract in ALL CAPS as shown on card.
 - date_of_reg: convert any date format to DD/MM/YYYY
-- entity_type: derive from 4th character of PAN — C→COMPANY, P→INDIVIDUAL, H→HUF, F→FIRM, T→TRUST
+- entity_type: derive from 4th character of PAN — C which means 'COMPANY'
 - issuing_auth: always "Income Tax Department" for Indian PAN cards
-- Do NOT copy these example values — extract from the OCR text below
+
+NOTE: GIVE ONLY THE JSON AS OUTPUT — DO NOT COPY ANY OF THE ABOVE EXAMPLE VALUES OR FIELD NAMES — EXTRACT FROM THE OCR TEXT BELOW AND OUTPUT ONLY THE JSON, NO MARKDOWN, NO EXPLANATION, NO EXTRA TEXT. JUST THE JSON OUTPUT.
 
 OCR TEXT:
 {ocr_text}"""
@@ -67,12 +68,11 @@ WHAT THIS DOCUMENT LOOKS LIKE:
 - Has the principal place of business address
 - Shows date of liability and effective date of registration
 - Constitution of business field (e.g. Private Limited Company, Proprietorship)
-- Digital signature at bottom
 
 FIELD LABELS ON DOCUMENT (look for these exact label names):
 - "GSTIN" or "GSTIN/UIN" → 15-character GST Identification Number
-- "Legal Name of Business" or "Legal Name" → registered company name
-- "Trade Name" → trade/brand name (may differ from legal name)
+- "Legal Name" WHICH INDICATES the - registered company name
+- "Trade Name" WHICH INDICATES the - trade/brand name (may differ from legal name)
 - "State" and "State Code" → 2-digit state code at start of GSTIN
 - "Constitution of Business" → company type
 - "Date of Liability" or "Effective Date of Registration" → registration date
@@ -83,17 +83,17 @@ GSTIN STRUCTURE: First 2 digits = state code, next 10 = PAN, 13th = entity numbe
 
 Extract into this exact JSON (use null for missing):
 {{
-  "gstin": "33AAKCM1234C1ZP",
-  "pan_number": "AAKCM1234C",
-  "legal_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
-  "trade_name": "MANIKANDAN CONSTRUCTIONS",
-  "state_code": "33",
-  "state": "Tamil Nadu",
+  "gstin": "<extracted GSTIN>",
+  "pan_number": "<extracted PAN number from GSTIN>",
+  "legal_name": "<extracted legal name of business>",
+  "trade_name": "<extracted trade name or brand name>",
+  "state_code": "<extracted state code from GSTIN>",
+  "state": "<extracted state>",
   "status": "ACTIVE",
-  "registration_date": "01/07/2017",
-  "constitution": "Private Limited Company",
-  "address": "45 GST Nagar, Anna Nagar, Chennai, Tamil Nadu",
-  "pincode": "600040"
+  "registration_date": "<extracted registration date>",
+  "constitution": "<extracted constitution of business>",
+  "address": "<extracted principal place of business address - includes street, city, state>",
+  "pincode": "<extracted pincode from address>"
 }}
 
 EXTRACTION RULES:
@@ -103,6 +103,10 @@ EXTRACTION RULES:
 - registration_date: convert to DD/MM/YYYY
 - status: ACTIVE if registered and valid, CANCELLED if cancelled
 - Do NOT copy these example values — extract from the OCR text below
+
+
+NOTE: GIVE ONLY THE JSON AS OUTPUT — DO NOT COPY ANY OF THE ABOVE EXAMPLE VALUES OR FIELD NAMES — EXTRACT FROM THE OCR TEXT BELOW AND OUTPUT ONLY THE JSON, NO MARKDOWN, NO EXPLANATION, NO EXTRA TEXT. JUST THE JSON OUTPUT.
+
 
 OCR TEXT:
 {ocr_text}"""
@@ -115,7 +119,7 @@ class LEICertificateAgent(DocumentAgent):
         return f"""You are reading OCR text from an LEI (Legal Entity Identifier) Certificate issued by Legal Entity Identifier India Ltd (LEIL) or another LOU.
 
 WHAT THIS DOCUMENT LOOKS LIKE:
-- An A4 certificate issued by LEIL (a subsidiary of Clearing Corporation of India Ltd)
+- An certificate issued by LEIL (a subsidiary of Clearing Corporation of India Ltd)
 - Header: "Legal Entity Identifier India Ltd" or "LEIL"
 - The LEI code is a prominent 20-character alphanumeric code (ISO 17442 standard)
 - Shows the entity's legal name as registered
@@ -126,11 +130,11 @@ WHAT THIS DOCUMENT LOOKS LIKE:
 - Bottom has digital signature
 
 FIELD LABELS ON DOCUMENT:
-- "LEI" or "LEI Code" → 20-character code like 335800ZKOEYGGGCTEV49
-- "Legal Name" or "Entity Name" → company's registered legal name
-- "Registration Date" or "Initial Registration Date" → when LEI was first issued
-- "Next Renewal Date" or "Expiry Date" → when LEI needs renewal (annual)
-- "Registration Status" or "Status" → ISSUED (valid), LAPSED (expired), RETIRED
+- "LEI" or "LEI Code" which is 20-character code like 335800ZKOEYGGGCTEV49
+- "Legal Name" or "Entity Name" which is company's registered legal name
+- "Registration Date" or "Initial Registration Date" means when LEI was first issued
+- "Next Renewal Date" or "Expiry Date" means when LEI needs renewal (annual)
+- "Registration Status" or "Status"  - ISSUED (valid), LAPSED (expired), RETIRED
 - "Corroboration Level" → FULLY_CORROBORATED or PARTIALLY_CORROBORATED
 - "Managing LOU" or "Issuing LOU" → the issuing organization
 - "CIN" → Corporate Identification Number
@@ -138,13 +142,13 @@ FIELD LABELS ON DOCUMENT:
 
 Extract into this exact JSON (use null for missing):
 {{
-  "lei_code": "335800ZKOEYGGGCTEV49",
-  "legal_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
-  "cin": "U45200TN2010PTC123456",
-  "pan_number": "AAKCM1234C",
+  "lei_code": "<extracted LEI code>",
+  "legal_name": "<extracted legal name>",
+  "cin": "<extracted CIN>",
+  "pan_number": "<extracted PAN number>",
   "status": "ACTIVE",
-  "registration_date": "15/03/2020",
-  "renewal_date": "15/03/2026",
+  "registration_date": "<extracted registration date>",
+  "renewal_date": "<extracted renewal date>",
   "issuing_lou": "Legal Entity Identifier India Ltd",
   "country": "India"
 }}
@@ -156,6 +160,9 @@ EXTRACTION RULES:
 - dates: convert to DD/MM/YYYY format
 - Do NOT copy these example values — extract from the OCR text below
 
+
+NOTE: GIVE ONLY THE JSON AS OUTPUT — DO NOT COPY ANY OF THE ABOVE EXAMPLE VALUES OR FIELD NAMES — EXTRACT FROM THE OCR TEXT BELOW AND OUTPUT ONLY THE JSON, NO MARKDOWN, NO EXPLANATION, NO EXTRA TEXT. JUST THE JSON OUTPUT.
+
 OCR TEXT:
 {ocr_text}"""
 
@@ -164,10 +171,10 @@ class IncorporationCertificateAgent(DocumentAgent):
     doc_type = "INCORPORATION_CERTIFICATE"
 
     def _build_prompt(self, ocr_text: str) -> str:
-        return f"""You are reading OCR text from a Certificate of Incorporation issued by the Ministry of Corporate Affairs (MCA), Government of India.
+        return f"""You are reading OCR extracted text from a Certificate of Incorporation issued by the Ministry of Corporate Affairs (MCA), Government of India.
 
 WHAT THIS DOCUMENT LOOKS LIKE:
-- An official A4 government certificate with the MCA logo and emblem of India
+- An official government certificate with the MCA logo and emblem of India
 - Header: "Ministry of Corporate Affairs" and "Certificate of Incorporation"
 - Issued by the Registrar of Companies (ROC) of the respective state
 - Has a CIN (Corporate Identification Number) prominently displayed
@@ -178,40 +185,43 @@ WHAT THIS DOCUMENT LOOKS LIKE:
 - After Companies Act 2013: also shows PAN allotted
 
 FIELD LABELS ON DOCUMENT:
-- "Corporate Identity Number" or "CIN" → 21-character alphanumeric starting with U or L
-- "Name of the Company" → full registered company name in CAPS
-- "Date of Incorporation" → when company was legally formed
-- "Authorized Capital" → maximum capital the company can raise (in Rs.)
-- "Registered Office Address" or "Registered Address" → company's official address
-- "State" → state where company is registered
-- "Registrar of Companies" → the ROC office (e.g. ROC Chennai, ROC Mumbai)
-- "PAN" → Permanent Account Number (shown on newer certificates)
-- "Type of Company" → Private Limited, Public Limited, OPC, LLP
+- "Corporate Identity Number" or "CIN" is 21-character alphanumeric starting with U or L
+- "Name of the Company" in full registered company name in CAPS
+- "Date of Incorporation" means when company was legally formed
+- "Authorized Capital" means maximum capital the company can raise (in Rs.)
+- "Registered Office Address" or "Registered Address" means company's official address
+- "State" means state where company is registered
+- "Registrar of Companies" means the ROC office (e.g. ROC Chennai, ROC Mumbai)
+- "PAN" → Permanent Account Number
+- "Type of Company" - Private Limited, Public Limited, OPC, LLP
 
-CIN STRUCTURE: U/L (listed/unlisted) + 5-digit industry code + 2-letter state code + 4-digit year + PTC/PLC/OPC + 6-digit serial
+IMPORTANT: CIN STRUCTURE: U/L (listed/unlisted) + 5-digit industry code + 2-letter state code + 4-digit year + PTC/PLC/OPC + 6-digit serial
 
 Extract into this exact JSON (use null for missing):
 {{
-  "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
-  "cin": "U45200TN2010PTC123456",
-  "pan_number": "AAKCM1234C",
-  "date_of_incorp": "15/03/2010",
-  "company_type": "Private Limited Company",
-  "authorized_capital": "2500000",
-  "state": "Tamil Nadu",
-  "roc": "Registrar of Companies, Chennai",
-  "address": "45 Main Road, Anna Nagar, Chennai, Tamil Nadu",
-  "pincode": "600040"
+  "company_name": "<extracted company name>",
+  "cin": "<extracted CIN>",
+  "pan_number": "<extracted PAN number>",
+  "date_of_incorp": "<extracted date of incorporation>",
+  "company_type": "<extracted company type>",
+  "authorized_capital": "<extracted authorized capital>",
+  "state": "<extracted state>",
+  "roc": "<extracted ROC office>",
+  "address": "<extracted registered office address>",
+  "pincode": "<extracted pincode from address>"
 }}
 
 EXTRACTION RULES:
 - cin: starts with U or L followed by exactly 20 more characters
-- pan_number: exactly 10 chars like AAKCM1234C
+- pan_number: exactly 10 chars 
 - date_of_incorp: convert to DD/MM/YYYY
 - authorized_capital: digits only, no Rs symbol, no commas (e.g. 2500000 not Rs.25,00,000)
 - pincode: exactly 6 digits from the address
 - company_type: Private Limited Company, Public Limited Company, One Person Company, LLP, etc.
 - Do NOT copy these example values — extract from the OCR text below
+
+
+NOTE: GIVE ONLY THE JSON AS OUTPUT — DO NOT COPY ANY OF THE ABOVE EXAMPLE VALUES OR FIELD NAMES — EXTRACT FROM THE OCR TEXT BELOW AND OUTPUT ONLY THE JSON, NO MARKDOWN, NO EXPLANATION, NO EXTRA TEXT. JUST THE JSON OUTPUT.
 
 OCR TEXT:
 {ocr_text}"""
@@ -241,24 +251,26 @@ FIELD LOCATIONS:
 - State: Clause II — "situated in the State of [STATE]"
 - Address: Clause II or preamble
 - Authorized capital: Clause V — "Rs.___ divided into ___ shares of Rs.___ each"
-- Main objects: Clause III(A) — numbered list of actual business activities
+- Main objects: Clause III(A) — numbered list of actual business activities - MUST COVER ALL OBJECTS.
 - Subscribers: Clause VI table — columns for Name, Father's Name, Address, Occupation, Shares subscribed
 
 Extract into this exact JSON (use null for missing):
 {{
-  "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
-  "cin": "U45200TN2010PTC123456",
-  "state": "Tamil Nadu",
-  "address": "45 Main Road, Anna Nagar, Chennai, Tamil Nadu",
-  "pincode": "600040",
-  "authorized_capital": "2500000",
+  "company_name": "<extracted company name>",
+  "cin": "<extracted CIN>",
+  "state": "<extracted state>",
+  "address": "<extracted registered office address>",
+  "pincode": "<extracted pincode from address>",
+  "authorized_capital": "<extracted authorized capital>",
   "main_objects": [
-    "To carry on the business of construction, development and maintenance of residential and commercial buildings",
-    "To undertake civil engineering, infrastructure and real estate development projects"
+    "<extracted main object 1>",
+    "<extracted main object 2>",
+    "<extracted main object 3>",
+    "<extracted main object N>"
   ],
   "subscribers": [
-    {{"name": "MANIKANDAN S", "shares": "5000"}},
-    {{"name": "KAVITHA M", "shares": "5000"}}
+    {{"name": "<extracted subscriber 1>", "shares": "<extracted shares 1>"}},
+    {{"name": "<extracted subscriber 2>", "shares": "<extracted shares 2>"}}
   ]
 }}
 
@@ -270,6 +282,10 @@ EXTRACTION RULES:
 - subscribers: people listed at end who subscribed to MOA with their share counts
 - pincode: 6-digit PIN from any address mentioned
 - Do NOT copy these example values — extract from the OCR text below
+
+
+NOTE: GIVE ONLY THE JSON AS OUTPUT — DO NOT COPY ANY OF THE ABOVE EXAMPLE VALUES OR FIELD NAMES — EXTRACT FROM THE OCR TEXT BELOW AND OUTPUT ONLY THE JSON, NO MARKDOWN, NO EXPLANATION, NO EXTRA TEXT. JUST THE JSON OUTPUT.
+
 
 OCR TEXT:
 {ocr_text}"""
@@ -301,14 +317,14 @@ FIELD LOCATIONS:
 
 Extract into this exact JSON (use null for missing):
 {{
-  "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
-  "cin": "U45200TN2010PTC123456",
-  "authorized_capital": "2500000",
-  "min_directors": "2",
-  "max_directors": "15",
+  "company_name": "<extracted company name>",
+  "cin": "<extracted CIN>",
+  "authorized_capital": "<extracted authorized capital>",
+  "min_directors": "<extracted min directors>",
+  "max_directors": "<extracted max directors>",
   "directors": [
-    {{"name": "MANIKANDAN S", "din": "01234567"}},
-    {{"name": "KAVITHA M", "din": "02345678"}}
+    {{"name": "<extracted director 1>", "din": "<extracted DIN 1>"}},
+    {{"name": "<extracted director 2>", "din": "<extracted DIN 2>"}}
   ]
 }}
 
@@ -320,6 +336,9 @@ EXTRACTION RULES:
 - directors: extract ALL first directors listed with their 8-digit DIN numbers
 - DIN is always 8 digits — look for labels "DIN:", "Director Identification Number:"
 - Do NOT copy these example values — extract from the OCR text below
+
+
+NOTE: GIVE ONLY THE JSON AS OUTPUT — DO NOT COPY ANY OF THE ABOVE EXAMPLE VALUES OR FIELD NAMES — EXTRACT FROM THE OCR TEXT BELOW AND OUTPUT ONLY THE JSON, NO MARKDOWN, NO EXPLANATION, NO EXTRA TEXT. JUST THE JSON OUTPUT.
 
 OCR TEXT:
 {ocr_text}"""
@@ -352,21 +371,21 @@ FIELD LABELS:
 
 Extract into this exact JSON (use null for missing):
 {{
-  "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
-  "cin": "U45200TN2010PTC123456",
-  "pan_number": "AAKCM1234C",
-  "gstin": "33AAKCM1234C1ZP",
-  "lei": "335800ZKOEYGGGCTEV49",
-  "address_line1": "45 Main Road",
-  "address_line2": "Anna Nagar West",
-  "area": "Perambur",
-  "city": "Chennai",
-  "state": "Tamil Nadu",
-  "pincode": "600040",
-  "srn": "G12345678",
-  "filing_date": "01/04/2023",
-  "approval_date": "05/04/2023",
-  "status": "APPROVED"
+  "company_name": "<extracted company name>",
+  "cin": "<extracted CIN>",
+  "pan_number": "<extracted PAN number>",
+  "gstin": "<extracted GSTIN>",
+  "lei": "<extracted LEI>",
+  "address_line1": "<extracted address line 1>",
+  "address_line2": "<extracted address line 2>",
+  "area": "<extracted area>",
+  "city": "<extracted city>",
+  "state": "<extracted state>",
+  "pincode": "<extracted pincode>",
+  "srn": "<extracted SRN>",
+  "filing_date": "<extracted filing date>",
+  "approval_date": "<extracted approval date>",
+  "status": "<extracted status>"
 }}
 
 EXTRACTION RULES:
@@ -378,6 +397,9 @@ EXTRACTION RULES:
 - srn: alphanumeric MCA service request number
 - dates: DD/MM/YYYY format
 - Do NOT copy these example values — extract from the OCR text below
+
+
+NOTE: GIVE ONLY THE JSON AS OUTPUT — DO NOT COPY ANY OF THE ABOVE EXAMPLE VALUES OR FIELD NAMES — EXTRACT FROM THE OCR TEXT BELOW AND OUTPUT ONLY THE JSON, NO MARKDOWN, NO EXPLANATION, NO EXTRA TEXT. JUST THE JSON OUTPUT.
 
 OCR TEXT:
 {ocr_text}"""
@@ -415,18 +437,18 @@ FIELD LABELS (vary by DISCOM):
 
 Extract into this exact JSON (use null for missing):
 {{
-  "consumer_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
-  "consumer_number": "101234567890",
-  "discom": "TANGEDCO",
-  "address": "45 Main Road, Anna Nagar, Chennai, Tamil Nadu",
-  "pincode": "600040",
-  "bill_number": "BL/2024/03/12345",
-  "bill_date": "15/03/2024",
-  "due_date": "30/03/2024",
-  "billing_period": "March 2024",
-  "units_consumed": "4250",
-  "total_amount": "36500",
-  "connection_type": "Commercial"
+  "consumer_name": "<extracted consumer name>",
+  "consumer_number": "<extracted consumer number>",
+  "discom": "<extracted discom>",
+  "address": "<extracted address>",
+  "pincode": "<extracted pincode>",
+  "bill_number": "<extracted bill number>",
+  "bill_date": "<extracted bill date>",
+  "due_date": "<extracted due date>",
+  "billing_period": "<extracted billing period>",
+  "units_consumed": "<extracted units consumed>",
+  "total_amount": "<extracted total amount>",
+  "connection_type": "<extracted connection type>"
 }}
 
 EXTRACTION RULES:
@@ -438,6 +460,9 @@ EXTRACTION RULES:
 - units_consumed: digits only
 - connection_type: Commercial for business, Residential for home
 - Do NOT copy these example values — extract from the OCR text below
+
+
+NOTE: GIVE ONLY THE JSON AS OUTPUT — DO NOT COPY ANY OF THE ABOVE EXAMPLE VALUES OR FIELD NAMES — EXTRACT FROM THE OCR TEXT BELOW AND OUTPUT ONLY THE JSON, NO MARKDOWN, NO EXPLANATION, NO EXTRA TEXT. JUST THE JSON OUTPUT.
 
 OCR TEXT:
 {ocr_text}"""
@@ -475,18 +500,18 @@ FIELD LABELS (vary by provider):
 
 Extract into this exact JSON (use null for missing):
 {{
-  "account_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
-  "account_number": "CHE1234567",
-  "telephone_number": "04423456789",
-  "provider": "BSNL",
-  "address": "45 Main Road, Anna Nagar, Chennai, Tamil Nadu",
-  "pincode": "600040",
-  "bill_number": "BSNL/2024/03/12345",
-  "bill_date": "15/03/2024",
-  "due_date": "30/03/2024",
-  "billing_period": "March 2024",
-  "total_amount": "1250",
-  "connection_type": "Landline"
+  "account_name": "<extracted account name>",
+  "account_number": "<extracted account number>",
+  "telephone_number": "<extracted telephone number>",
+  "provider": "<extracted provider>",
+  "address": "<extracted address>",
+  "pincode": "<extracted pincode>",
+  "bill_number": "<extracted bill number>",
+  "bill_date": "<extracted bill date>",
+  "due_date": "<extracted due date>",
+  "billing_period": "<extracted billing period>",
+  "total_amount": "<extracted total amount>",
+  "connection_type": "<extracted connection type>"
 }}
 
 EXTRACTION RULES:
@@ -498,6 +523,9 @@ EXTRACTION RULES:
 - total_amount: digits only, no Rs or commas
 - connection_type: Landline or Mobile
 - Do NOT copy these example values — extract from the OCR text below
+
+NOTE: GIVE ONLY THE JSON AS OUTPUT — DO NOT COPY ANY OF THE ABOVE EXAMPLE VALUES OR FIELD NAMES — EXTRACT FROM THE OCR TEXT BELOW AND OUTPUT ONLY THE JSON, NO MARKDOWN, NO EXPLANATION, NO EXTRA TEXT. JUST THE JSON OUTPUT.
+
 
 OCR TEXT:
 {ocr_text}"""
@@ -513,10 +541,10 @@ class BoardOfDirectorsAgent(DocumentAgent):
 
 WHAT THIS DOCUMENT LOOKS LIKE:
 - Lists all current directors of the company
-- Each director entry: full name, DIN (8-digit Director Identification Number), designation, date of appointment, shareholding %, residential address, PAN, DOB, nationality
+- Each director entry: full name, DIN (8-digit Director Identification Number), designation, date of appointment, shareholding IN PERCENT %, residential address, PAN, DOB, nationality
 - DIN is always exactly 8 digits (e.g. 00123456) — mandatory unique identifier for all Indian directors
 - Designations: Managing Director, Whole-Time Director, Independent Director, Non-Executive Director, Director, Chairman, Additional Director
-- May show shareholding as % or as number of shares
+- May show shareholding as % (AS PERCENTAGE) or as number of shares
 - Other directorships: list of other companies where this person is a director (mandatory MCA disclosure)
 - If from Annual Report: tabular format with columns
 
@@ -526,41 +554,54 @@ FIELD LABELS:
 - "PAN" → director's personal PAN (10 chars, different from company PAN)
 - "Date of Birth" or "DOB" → director's birth date
 - "Designation" or "Category" → their board role
-- "Shareholding" or "% of Shares held" → their ownership stake
+- "Shareholding" or "PERCENTAGE (%) of Shares held" → their ownership stake
 - "Residential Address" → director's home address
 - "Nationality" → usually Indian
 - "Other Directorships" or "Directorships in other companies" → comma-separated list
 
-Extract into this exact JSON (use null for missing):
+Extract into this JSON LIKE THIS (use null for missing):
 {{
-  "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
-  "cin": "U45200TN2010PTC123456",
-  "pan": "AAKCM1234C",
+  "company_name": "<extracted company name>",
+  "cin": "<extracted CIN>",
+  "pan": "<extracted PAN>",
   "directors": [
     {{
-      "name": "MANIKANDAN S",
-      "din": "01234567",
-      "pan": "ABCPM1234D",
-      "dob": "15/06/1975",
-      "designation": "Managing Director",
-      "shareholding": "51%",
-      "address": "12 Lake View Road, Adyar, Chennai 600020",
+      "name": "<extracted director name>",
+      "din": "<extracted DIN>",
+      "pan": "<extracted PAN>",
+      "dob": "<extracted DOB>",
+      "designation": "<extracted designation>",
+      "shareholding": "<extracted shareholding>",
+      "address": "<extracted address>",
       "nationality": "Indian",
-      "other_directorships": "ABC Builders Pvt Ltd, XYZ Infrastructure Ltd"
+      "other_directorships": "<extracted other directorships>"
     }},
     {{
-      "name": "KAVITHA M",
-      "din": "02345678",
-      "pan": "ABCPK5678F",
-      "dob": "22/09/1978",
-      "designation": "Director",
-      "shareholding": "49%",
-      "address": "12 Lake View Road, Adyar, Chennai 600020",
+      "name": "<extracted director-2 name>",
+      "din": "<extracted DIN>",
+      "pan": "<extracted PAN>",
+      "dob": "<extracted DOB>",
+      "designation": "<extracted designation>",
+      "shareholding": "<extracted shareholding>",
+      "address": "<extracted address>",
       "nationality": "Indian",
-      "other_directorships": null
+      "other_directorships":"<extracted other directorships>"
+    }},
+    {{
+      "name": "<extracted director-N name>",
+      "din": "<extracted DIN>",
+      "pan": "<extracted PAN>",
+      "dob": "<extracted DOB>",
+      "designation": "<extracted designation>",
+      "shareholding": "<extracted shareholding>",
+      "address": "<extracted address>",
+      "nationality": "Indian",
+      "other_directorships":"<extracted other directorships>"
     }}
   ]
 }}
+
+NOTE - ABOVE IS JUST AN EXAMPLE STRUCTURE — EXTRACT ALL DIRECTORS FOUND IN THE DOCUMENT INTO THIS FORMAT, DO NOT LIMIT TO 3. USE null FOR ANY MISSING FIELDS. BUT STRICLTLY FOLLOW THE STRUCTURE SHOWN ABOVE.
 
 EXTRACTION RULES:
 - Extract ALL directors found in the document
@@ -568,9 +609,12 @@ EXTRACTION RULES:
 - director pan: personal PAN of each director (10 chars), NOT the company PAN
 - company pan: the company-level PAN if shown separately at top
 - dob: convert to DD/MM/YYYY
-- shareholding: include % symbol (e.g. "51%")
+- shareholding: MAY include % symbol (e.g. "51%")
 - other_directorships: comma-separated company names, null if none or "NIL"
 - Do NOT copy these example values — extract from the OCR text below
+
+NOTE: GIVE ONLY THE JSON AS OUTPUT — DO NOT COPY ANY OF THE ABOVE EXAMPLE VALUES OR FIELD NAMES — EXTRACT FROM THE OCR TEXT BELOW AND OUTPUT ONLY THE JSON, NO MARKDOWN, NO EXPLANATION, NO EXTRA TEXT. JUST THE JSON OUTPUT.
+
 
 OCR TEXT:
 {ocr_text}"""
@@ -601,30 +645,43 @@ FIELD LABELS:
 
 Extract into this exact JSON (use null for missing):
 {{
-  "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+  "company_name": "<extracted company name>",
   "kmps": [
     {{
-      "name": "RAJAN K",
-      "designation": "Chief Financial Officer",
-      "id_numbers": "PAN: ABCPR1234F, DIN: 03456789",
-      "email": "cfo@manikandan.com",
-      "phone": "9876543210"
+      "name": "<extracted KMP - 1 name>",
+      "designation": "<extracted designation>",
+      "id_numbers": "<extracted ID numbers>",
+      "email": "<extracted email>",
+      "phone": "<extracted phone>"
     }},
     {{
-      "name": "PRIYA SUBRAMANIAM",
-      "designation": "Company Secretary",
-      "id_numbers": "CS Membership: A12345, PAN: ABCPP9876G",
-      "email": "cs@manikandan.com",
-      "phone": null
+      "name": "<extracted KMP - 2 name>",
+      "designation": "<extracted designation>",
+      "id_numbers": "<extracted ID numbers in JSON {{\"DIN\": \"<extracted DIN>\", \"PAN\": \"<extracted PAN>\", \"CS Membership\": \"<extracted CS membership>\"}} - OR ANYOTHER EXTRACTED ID NUMBERS, SKIP IF NONE DONT PUT NULL>",
+      "email": "<extracted email>",
+      "phone": "<extracted phone>"
+    }}
+    ,
+     {{
+      "name": "<extracted KMP - n name>",
+      "designation": "<extracted designation>",
+      "id_numbers": "<extracted ID numbers>",
+      "email": "<extracted email>",
+      "phone": "<extracted phone>"
     }}
   ]
 }}
+
+NOTE: ABOVE IS JUST AN EXAMPLE STRUCTURE — EXTRACT ALL KMPs FOUND IN THE DOCUMENT INTO THIS FORMAT, DO NOT LIMIT TO 3. USE null FOR ANY MISSING FIELDS. BUT STRICTLY FOLLOW THE STRUCTURE SHOWN ABOVE.
 
 EXTRACTION RULES:
 - Extract ALL KMPs found in the document
 - id_numbers: combine all identification numbers as a readable string (PAN, DIN, membership number)
 - designation: use the exact title from the document
 - Do NOT copy these example values — extract from the OCR text below
+
+NOTE: GIVE ONLY THE JSON AS OUTPUT — DO NOT COPY ANY OF THE ABOVE EXAMPLE VALUES OR FIELD NAMES — EXTRACT FROM THE OCR TEXT BELOW AND OUTPUT ONLY THE JSON, NO MARKDOWN, NO EXPLANATION, NO EXTRA TEXT. JUST THE JSON OUTPUT.
+
 
 OCR TEXT:
 {ocr_text}"""
@@ -656,23 +713,23 @@ FIELD LABELS:
 
 Extract into this exact JSON (use null for missing):
 {{
-  "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+  "company_name": "<extracted company name>",
   "ubos": [
     {{
-      "name": "MANIKANDAN S",
-      "pan": "ABCPM1234D",
-      "direct_holding": "51%",
-      "indirect_holding": "0%",
-      "total_effective": "51%",
-      "nature": "Direct"
+      "name": "<extracted UBO name>",
+      "pan": "<extracted PAN>",
+      "direct_holding": "<extracted direct holding>",
+      "indirect_holding": "<extracted indirect holding>",
+      "total_effective": "<extracted total effective>",
+      "nature": "<extracted nature>"
     }}
   ],
   "related_entities": [
     {{
-      "name": "MANI HOLDINGS PVT LTD",
-      "pan": "AABCM1234E",
-      "relationship": "Holding Company",
-      "ownership_pct": "35%"
+      "name": "<extracted related entity name>",
+      "pan": "<extracted related entity PAN>",
+      "relationship": "<extracted relationship>",
+      "ownership_pct": "<extracted ownership percentage>"
     }}
   ]
 }}
@@ -686,6 +743,9 @@ EXTRACTION RULES:
 - related_entities: companies that hold shares in the applicant company
 - Do NOT copy these example values — extract from the OCR text below
 
+
+NOTE: GIVE ONLY THE JSON AS OUTPUT — DO NOT COPY ANY OF THE ABOVE EXAMPLE VALUES OR FIELD NAMES — EXTRACT FROM THE OCR TEXT BELOW AND OUTPUT ONLY THE JSON, NO MARKDOWN, NO EXPLANATION, NO EXTRA TEXT. JUST THE JSON OUTPUT.
+
 OCR TEXT:
 {ocr_text}"""
 
@@ -694,7 +754,7 @@ class PEPDeclarationAgent(DocumentAgent):
     doc_type = "PEP_DECLARATION"
 
     def _build_prompt(self, ocr_text: str) -> str:
-        return f"""You are reading OCR text from a PEP (Politically Exposed Person) Declaration / FATCA Declaration — required by RBI/SEBI for KYC compliance at NBFCs and banks.
+        return f"""You are reading OCR text from a PEP (Politically Exposed Person) Declaration — required by RBI/SEBI for KYC compliance at NBFCs and banks.
 
 WHAT THIS DOCUMENT LOOKS LIKE:
 - A self-declaration form signed by directors/KMPs/UBOs
@@ -703,7 +763,6 @@ WHAT THIS DOCUMENT LOOKS LIKE:
 - FATCA section: declares US person status for tax purposes
 - Each person signs a separate section or they appear in a table
 - Language patterns: "I/We hereby declare that I am/am not a Politically Exposed Person"
-- Checkboxes: [✓] Not a PEP  [ ] PEP  OR  [ ] Not a PEP  [✓] PEP
 
 FIELD LABELS:
 - "Name" or "Full Name" → declarant's full name
@@ -721,24 +780,34 @@ HOW TO READ PEP STATUS:
 
 Extract into this exact JSON (use null for missing):
 {{
-  "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+  "company_name": "<extracted company name>",
   "declarations": [
     {{
-      "name": "MANIKANDAN S",
-      "designation": "Managing Director",
-      "pep_status": "NOT A PEP",
-      "family_pep": "No",
-      "associate_pep": "No"
+      "name": "<extracted declarant - 1 name>",
+      "designation": "<extracted designation>",
+      "pep_status": "<extracted PEP status - "PEP" or "NOT A PEP">",
+      "family_pep": "<extracted family PEP status - Yes/No>",
+      "associate_pep": "<extracted associate PEP status - Yes/No>"
     }},
     {{
-      "name": "KAVITHA M",
-      "designation": "Director",
-      "pep_status": "NOT A PEP",
-      "family_pep": "No",
-      "associate_pep": "No"
+      "name": "<extracted declarant - 2 name>",
+      "designation": "<extracted designation>",
+      "pep_status": "<extracted PEP status "PEP" or "NOT A PEP">",
+      "family_pep": "<extracted family PEP status - Yes/No>",
+      "associate_pep": "<extracted associate PEP status - Yes/No>"
+    }}
+,
+    {{
+      "name": "<extracted declarant - N name>",
+      "designation": "<extracted designation>",
+      "pep_status": "<extracted PEP status - "PEP" or "NOT A PEP">",
+      "family_pep": "<extracted family PEP status - Yes/No>",
+      "associate_pep": "<extracted associate PEP status - Yes/No>"
     }}
   ]
 }}
+
+NOTE: ABOVE IS JUST AN EXAMPLE STRUCTURE — EXTRACT ALL DECLARANTS FOUND & THEIR PEP STATUS STRICTLY FROM THE DOCUMENT INTO THIS FORMAT, DO NOT LIMIT TO 3. USE null FOR ANY MISSING FIELDS. BUT STRICTLY FOLLOW THE STRUCTURE SHOWN ABOVE.
 
 EXTRACTION RULES:
 - pep_status MUST be EXACTLY "PEP" or "NOT A PEP" — no other values
@@ -746,6 +815,9 @@ EXTRACTION RULES:
 - family_pep: "Yes" or "No"
 - associate_pep: "Yes" or "No"
 - Do NOT copy these example values — extract from the OCR text below
+
+NOTE: GIVE ONLY THE JSON AS OUTPUT — DO NOT COPY ANY OF THE ABOVE EXAMPLE VALUES OR FIELD NAMES — EXTRACT FROM THE OCR TEXT BELOW AND OUTPUT ONLY THE JSON, NO MARKDOWN, NO EXPLANATION, NO EXTRA TEXT. JUST THE JSON OUTPUT.
+
 
 OCR TEXT:
 {ocr_text}"""
@@ -781,28 +853,30 @@ RISK ASSESSMENT:
 
 Extract into this exact JSON (use null for missing):
 {{
-  "company_name": "MANIKANDAN CONSTRUCTIONS PVT LTD",
+  "company_name": "<extracted company name>",
   "related_party_transactions": [
     {{
-      "related_party": "MANI HOLDINGS PVT LTD",
-      "relationship": "Holding Company (49% shareholder)",
-      "transaction_type": "Unsecured Inter-Corporate Loan",
-      "amount": "5000000",
-      "terms": "12% per annum, repayable in 3 years, no collateral",
-      "approval": "Board Resolution dated 01/04/2023 and Shareholder approval at EGM 15/04/2023",
-      "risk_flag": "MEDIUM"
+      "related_party": "<extracted related party name>",
+      "relationship": "<extracted relationship>",
+      "transaction_type": "<extracted transaction type>",
+      "amount": "<extracted amount>",
+      "terms": "<extracted terms>",
+      "approval": "<extracted approval>",
+      "risk_flag": "<extracted risk flag - HIGH/MEDIUM/LOW>"
     }},
     {{
-      "related_party": "MANIKANDAN S",
-      "relationship": "Managing Director",
+      "related_party": "<extracted related party name>",
+      "relationship": "<extracted relationship>",
       "transaction_type": "Managerial Remuneration",
-      "amount": "1200000",
-      "terms": "Annual remuneration within Schedule V limits",
-      "approval": "Shareholders approval at AGM 2023",
-      "risk_flag": "LOW"
+      "amount": "<extracted amount>",
+      "terms": "<extracted terms>",
+      "approval": "<extracted approval>",
+      "risk_flag": "<extracted risk flag - HIGH/MEDIUM/LOW>"
     }}
   ]
 }}
+
+NOTE: ABOVE IS JUST AN EXAMPLE STRUCTURE — EXTRACT ALL RPTs FOUND IN THE DOCUMENT INTO THIS FORMAT, DO NOT LIMIT TO 2. USE null FOR ANY MISSING FIELDS. BUT STRICTLY FOLLOW THE STRUCTURE SHOWN ABOVE.
 
 EXTRACTION RULES:
 - Extract ALL related party transactions listed
@@ -810,6 +884,9 @@ EXTRACTION RULES:
 - relationship: describe clearly including % of shareholding if mentioned
 - risk_flag: HIGH / MEDIUM / LOW based on transaction risk profile described above
 - Do NOT copy these example values — extract from the OCR text below
+
+
+NOTE: GIVE ONLY THE JSON AS OUTPUT — DO NOT COPY ANY OF THE ABOVE EXAMPLE VALUES OR FIELD NAMES — EXTRACT FROM THE OCR TEXT BELOW AND OUTPUT ONLY THE JSON, NO MARKDOWN, NO EXPLANATION, NO EXTRA TEXT. JUST THE JSON OUTPUT.
 
 OCR TEXT:
 {ocr_text}"""

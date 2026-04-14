@@ -1,24 +1,56 @@
 """
 Fraud Analysis Service
 Entity graph building, PEP screening, RPT analysis, risk score
+
+FIXES:
+- All .get() calls use `or ""` / `or []` instead of default="" to handle
+  explicit None values coming from Pydantic-validated agent output
+- _name_match guards against None on both sides
+- other_directorships None-safe split
 """
-from datetime import datetime
 from typing import Optional
 
 
+# ── Helpers ───────────────────────────────────────────────────
+
+def _s(val) -> str:
+    """Safe string — converts None/anything to str, strips whitespace."""
+    if val is None:
+        return ""
+    return str(val).strip()
+
+
+def _name_match(label: str, name) -> bool:
+    """Case-insensitive substring match, None-safe on both sides."""
+    if not label or not name:
+        return False
+    ln = _s(label).replace("\n", " ").upper()
+    nm = _s(name).upper()
+    if not ln or not nm:
+        return False
+    return ln == nm or ln in nm or nm in ln
+
+
+def _split_directorships(raw) -> list[str]:
+    """Split other_directorships string (or None) into a clean list."""
+    if not raw:
+        return []
+    return [
+        x.strip() for x in _s(raw).replace(";", ",").split(",")
+        if x.strip() and x.strip().upper() not in ("NONE", "NIL", "NA", "N/A", "-", "NULL", "")
+    ]
+
+
 # ── Entity Graph Builder ──────────────────────────────────────
+
 def build_entity_graph(
     board_data: dict,
     benef_data: dict,
     company_name: str,
     compliance_doc_data: dict = None,
 ) -> dict:
-    """
-    Build entity graph nodes and edges from parsed fraud docs.
-    Returns {nodes, edges} matching frontend EntityGraph schema.
-    """
-    nodes = []
-    edges = []
+    nodes    = []
+    edges    = []
     node_ids = {}
 
     def add_node(id_key: str, label: str, node_type: str, risk: str = "low") -> str:
@@ -27,37 +59,32 @@ def build_entity_graph(
             nodes.append({"id": id_key, "label": label, "type": node_type, "risk": risk})
         return id_key
 
-    # Main company node
     company_id = add_node("company", company_name.replace(" ", "\n"), "company", "low")
 
-    # Directors from board doc
-    directors  = board_data.get("directors", [])
+    # Directors
+    directors = board_data.get("directors") or []
     for i, d in enumerate(directors[:5]):
-        name      = d.get("name", f"Director {i+1}")
-        did       = f"dir{i+1}"
-        shareholding = d.get("shareholding", "")
-        din       = d.get("din", "")
-        add_node(did, name, "person", "low")
-        label = f"Director {shareholding}" if shareholding and shareholding not in ("%", "") else "Director"
-        edges.append({"from": did, "to": company_id, "label": label, "type": "ownership"})
+        name         = _s(d.get("name")) or f"Director {i+1}"
+        shareholding = _s(d.get("shareholding"))
+        did          = f"dir{i+1}"
 
-        # Other directorships
-        other = d.get("other_directorships", "")
-        if other and other.strip() and other.strip() not in ("None", "NIL", "Nil", "-"):
-            other_companies = [x.strip() for x in other.replace(";", ",").split(",") if x.strip()]
-            for j, oc in enumerate(other_companies[:2]):
-                oc_id = f"other_co_{i}_{j}"
-                add_node(oc_id, oc.replace(" ", "\n"), "company", "medium")
-                edges.append({"from": did, "to": oc_id, "label": "Director", "type": "directorship"})
+        add_node(did, name, "person", "low")
+        edge_label = f"Director {shareholding}" if shareholding and shareholding not in ("%", "") else "Director"
+        edges.append({"from": did, "to": company_id, "label": edge_label, "type": "ownership"})
+
+        for j, oc in enumerate(_split_directorships(d.get("other_directorships"))[:2]):
+            oc_id = f"other_co_{i}_{j}"
+            add_node(oc_id, oc.replace(" ", "\n"), "company", "medium")
+            edges.append({"from": did, "to": oc_id, "label": "Director", "type": "directorship"})
 
     # Beneficial owners
-    ubos = benef_data.get("ubos", [])
-    related_entities = benef_data.get("related_entities", [])
+    ubos             = benef_data.get("ubos") or []
+    related_entities = benef_data.get("related_entities") or []
 
     for i, ubo in enumerate(ubos[:3]):
-        name = ubo.get("name", f"UBO {i+1}")
+        name = _s(ubo.get("name")) or f"UBO {i+1}"
         uid  = f"ubo_{i}"
-        # Check if already added as director
+
         matched_id = None
         for node in nodes:
             if node["type"] == "person" and _name_match(node["label"], name):
@@ -65,29 +92,31 @@ def build_entity_graph(
                 break
         if not matched_id:
             matched_id = add_node(uid, name, "person", "low")
-        pct = ubo.get("direct_holding", "") or ubo.get("total_effective", "")
+
+        pct = _s(ubo.get("direct_holding")) or _s(ubo.get("total_effective"))
         edges.append({
-            "from": matched_id, "to": company_id,
+            "from":  matched_id,
+            "to":    company_id,
             "label": f"Owns {pct}" if pct else "Beneficial Owner",
-            "type": "beneficial",
+            "type":  "beneficial",
         })
 
     for i, entity in enumerate(related_entities[:3]):
-        name = entity.get("name", f"Related Entity {i+1}")
+        name = _s(entity.get("name")) or f"Related Entity {i+1}"
         eid  = f"related_{i}"
-        rel  = entity.get("relationship", "Related")
-        pct  = entity.get("ownership_pct", "")
+        rel  = _s(entity.get("relationship")) or "Related"
+        pct  = _s(entity.get("ownership_pct"))
         add_node(eid, name.replace(" ", "\n"), "company", "medium")
         edges.append({
-            "from": eid, "to": company_id,
+            "from":  eid,
+            "to":    company_id,
             "label": f"Owns {pct}" if pct else rel,
-            "type": "ownership",
+            "type":  "ownership",
         })
 
-    # Add bank node if company has bank relationship (from compliance docs)
+    # Utility/bank node from compliance docs
     if compliance_doc_data:
-        # Look for any bank in electricity/utility bills
-        discom = compliance_doc_data.get("ELECTRICITY_BILL", {}).get("discom", "")
+        discom = _s((compliance_doc_data.get("ELECTRICITY_BILL") or {}).get("discom"))
         if discom:
             bank_id = add_node("bank1", discom.replace(" ", "\n"), "bank", "low")
             edges.append({"from": company_id, "to": bank_id, "label": "Utility Account", "type": "financial"})
@@ -95,47 +124,41 @@ def build_entity_graph(
     return {"nodes": nodes, "edges": edges}
 
 
-def _name_match(label: str, name: Optional[str]) -> bool:
-    if not name or not label: 
-        return False
-    ln = label.replace("\n", " ").upper().strip()
-    nm = name.upper().strip()
-    return ln == nm or ln in nm or nm in ln
-
-
 # ── PEP Screening ─────────────────────────────────────────────
-def screen_pep(pep_data: dict, board_data: dict) -> dict:
-    """
-    Check PEP declarations and cross-reference with directors.
-    """
-    declarations = pep_data.get("declarations", [])
-    pep_found    = sum(1 for d in declarations if "PEP" == d.get("pep_status", "").upper()
-                       and "NOT" not in d.get("pep_status", "").upper())
 
-    results = []
-    directors = board_data.get("directors", [])
+def screen_pep(pep_data: dict, board_data: dict) -> dict:
+    declarations = pep_data.get("declarations") or []
+
+    pep_found = sum(
+        1 for d in declarations
+        if _s(d.get("pep_status")).upper() == "PEP"
+        and "NOT" not in _s(d.get("pep_status")).upper()
+    )
+
+    results   = []
+    directors = board_data.get("directors") or []
+
     for d in directors:
-        name       = d.get("name", "")
+        name       = _s(d.get("name"))
         pep_status = False
-        # Look for matching declaration
+
         for decl in declarations:
-            if _name_match(decl.get("name", ""), name):
-                pep_status = "PEP" == decl.get("pep_status", "").upper() and "NOT" not in decl.get("pep_status", "")
+            if _name_match(_s(decl.get("name")), name):
+                status_str = _s(decl.get("pep_status")).upper()
+                pep_status = (status_str == "PEP" and "NOT" not in status_str)
                 break
+
         results.append({
-            "name":       name,
-            "din":        d.get("din", ""),
-            "pan":        d.get("pan", ""),
-            "dob":        d.get("dob", ""),
-            "address":    d.get("address", ""),
-            "role":       d.get("designation", "Director"),
-            "pep":        pep_status,
-            "sanctions":  False,  # Would integrate with real sanctions DB
-            "riskScore":  40 if pep_status else 15,
-            "otherDirectorships": [
-                x.strip() for x in d.get("other_directorships", "").replace(";", ",").split(",")
-                if x.strip() and x.strip() not in ("None", "NIL", "Nil", "-")
-            ],
+            "name":               name,
+            "din":                _s(d.get("din")),
+            "pan":                _s(d.get("pan")),
+            "dob":                _s(d.get("dob")),
+            "address":            _s(d.get("address")),
+            "role":               _s(d.get("designation")) or "Director",
+            "pep":                pep_status,
+            "sanctions":          False,
+            "riskScore":          40 if pep_status else 15,
+            "otherDirectorships": _split_directorships(d.get("other_directorships")),
         })
 
     return {
@@ -147,33 +170,31 @@ def screen_pep(pep_data: dict, board_data: dict) -> dict:
 
 
 # ── RPT Analysis ──────────────────────────────────────────────
-def analyze_rpt(rpt_data: dict, board_data: dict) -> dict:
-    """
-    Analyse related party transactions and assign risk levels.
-    """
-    transactions = rpt_data.get("related_party_transactions", [])
-    directors    = {d.get("name", "").upper() for d in board_data.get("directors", [])}
 
-    flagged    = []
-    max_risk   = 0
+def analyze_rpt(rpt_data: dict, board_data: dict) -> dict:
+    transactions = rpt_data.get("related_party_transactions") or []
+
+    flagged  = []
+    max_risk = 0
     risk_order = {"LOW": 10, "MEDIUM": 30, "HIGH": 50}
 
     formatted = []
     for t in transactions:
-        rp       = t.get("related_party", "")
-        rel      = t.get("relationship", "")
-        rf       = t.get("risk_flag", "LOW — standard")
-        risk_lvl = "HIGH" if "HIGH" in rf.upper() else ("MEDIUM" if "MEDIUM" in rf.upper() else "LOW")
+        rp       = _s(t.get("related_party"))
+        rel      = _s(t.get("relationship"))
+        rf       = _s(t.get("risk_flag")) or "LOW"
+        rf_upper = rf.upper()
+        risk_lvl = "HIGH" if "HIGH" in rf_upper else ("MEDIUM" if "MEDIUM" in rf_upper else "LOW")
         risk_num = risk_order.get(risk_lvl, 10)
         max_risk = max(max_risk, risk_num)
 
         entry = {
             "entity":          rp,
             "relationship":    rel,
-            "transactionType": t.get("transaction_type", ""),
-            "amount":          t.get("amount", "Unknown"),
+            "transactionType": _s(t.get("transaction_type")),
+            "amount":          _s(t.get("amount")) or "Unknown",
             "riskLevel":       risk_lvl,
-            "flagReason":      t.get("terms", "") or rf,
+            "flagReason":      _s(t.get("terms")) or rf,
         }
         formatted.append(entry)
         if risk_lvl in ("HIGH", "MEDIUM"):
@@ -190,29 +211,34 @@ def analyze_rpt(rpt_data: dict, board_data: dict) -> dict:
 
 
 # ── Ownership Chains ──────────────────────────────────────────
+
 def build_ownership_chains(benef_data: dict, board_data: dict) -> list:
-    chains = []
-    company = benef_data.get("company_name", "")
-    for ubo in benef_data.get("ubos", []):
-        pct = ubo.get("direct_holding") or ubo.get("total_effective") or "?"
+    chains  = []
+    company = _s(benef_data.get("company_name"))
+
+    for ubo in (benef_data.get("ubos") or []):
+        pct = _s(ubo.get("direct_holding")) or _s(ubo.get("total_effective")) or "?"
         chains.append({
-            "owner":   ubo.get("name"),
+            "owner":   _s(ubo.get("name")),
             "holding": pct,
-            "nature":  ubo.get("nature", "Direct"),
+            "nature":  _s(ubo.get("nature")) or "Direct",
             "company": company,
         })
-    for rel in benef_data.get("related_entities", []):
+
+    for rel in (benef_data.get("related_entities") or []):
         chains.append({
-            "owner":      rel.get("name"),
-            "holding":    rel.get("ownership_pct", "?"),
-            "nature":     rel.get("relationship", "Indirect"),
-            "via_entity": rel.get("name"),
+            "owner":      _s(rel.get("name")),
+            "holding":    _s(rel.get("ownership_pct")) or "?",
+            "nature":     _s(rel.get("relationship")) or "Indirect",
+            "via_entity": _s(rel.get("name")),
             "company":    company,
         })
+
     return chains
 
 
 # ── Final Risk Score ──────────────────────────────────────────
+
 def compute_risk_score(
     pep_result: dict,
     rpt_result: dict,
@@ -239,7 +265,7 @@ def compute_risk_score(
         score += 5
         flags.append("HIGH_RELATIONSHIP_COUNT")
 
-    if compliance_verdict == "FAIL":
+    if _s(compliance_verdict).upper() == "FAIL":
         score += 15
         flags.append("COMPLIANCE_FAILED")
 

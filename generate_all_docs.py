@@ -30,27 +30,26 @@ W, H = A4  # 595 x 842 pts
 
 # ── Shared entity ─────────────────────────────────────────────
 E = {
-    "company":        "MANIKANDAN CONSTRUCTIONS PVT LTD",
-    "company_pan":    "AAKCM1234C",
-    "company_gstin":  "33AAKCM1234C1ZP",
-    "company_lei":    "335800AAKCM12345678X",
-    "cin":            "U45200TN2015PTC123456",
-    "incorp_date":    "15/04/2015",
-    "director":       "D MANIKANDAN",
-    "director_pan":   "BNZPM2501F",
-    "director2":      "S RAJESHWARI",
-    "addr1":          "No. 14, Second Floor, Anna Salai",
-    "addr2":          "Teynampet, Chennai - 600018",
-    "state":          "Tamil Nadu",
-    "state_code":     "33",
-    "pincode":        "600018",
-    "auth_capital":   "25,00,000",
-    "email":          "info@manikandanconstructions.in",
-    "phone":          "044-28140055",
-    "mobile":         "9884012345",
-    "roc":            "Registrar of Companies, Tamil Nadu, Chennai",
+    "company":        "NEXA URBAN DEVELOPERS PRIVATE LIMITED",
+    "company_pan":    "AACCN4587K",
+    "company_gstin":  "27AACCN4587K1Z5",
+    "company_lei":    "529900AACCN4587K0001",
+    "cin":            "U70109MH2019PTC328765",
+    "incorp_date":    "11/07/2019",
+    "director":       "VIKRAM DESHMUKH",
+    "director_pan":   "AKDPD7392R",
+    "director2":      "NEHA JOSHI",
+    "addr1":          "Office No. 305, 3rd Floor, Business Plaza",
+    "addr2":          "Andheri East, Mumbai - 400069",
+    "state":          "Maharashtra",
+    "state_code":     "27",
+    "pincode":        "400069",
+    "auth_capital":   "1,00,00,000",
+    "email":          "info@nexaurban.in",
+    "phone":          "022-26891234",
+    "mobile":         "9823456781",
+    "roc":            "Registrar of Companies, Maharashtra, Mumbai",
 }
-
 
 # ═══════════════════════════════════════════════════════════════════════
 # HELPERS

@@ -37,6 +37,7 @@ async def search_records(
             "$or": [
                 {"pan":          {"$regex": re.escape(search_term), "$options": "i"}},
                 {"company_name": {"$regex": re.escape(search_term), "$options": "i"}},
+                {"session_id":   {"$regex": re.escape(search_term), "$options": "i"}},
             ]
         }
     else:

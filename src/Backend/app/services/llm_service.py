@@ -86,7 +86,14 @@ Format: ["Point 1.", "Point 2.", "Point 3.", "Point 4.", "Point 5.", "Point 6.",
         if start != -1 and end != -1:
             raw = raw[start:end + 1]
         points = json.loads(raw)
-        return points if isinstance(points, list) else [raw]
+        
+        cleaned_points = []
+        for p in (points if isinstance(points, list) else [raw]):
+            if isinstance(p, str):
+                cleaned_points.append(p.replace("<", "&lt;").replace(">", "&gt;"))
+            else:
+                cleaned_points.append(str(p).replace("<", "&lt;").replace(">", "&gt;"))
+        return cleaned_points
     except Exception as e:
         return [
             f"{company_name} is under review for NBFC compliance.",
@@ -94,18 +101,28 @@ Format: ["Point 1.", "Point 2.", "Point 3.", "Point 4.", "Point 5.", "Point 6.",
             "PEP and sanctions screening completed.",
             "Related party transactions identified and flagged for review.",
             "All primary documents verified against public APIs.",
-            f"NLP summary generation encountered an issue: {e}",
-            f"Overall risk: {compliance_verdict}. Manual review recommended.",
+            f"NLP summary generation encountered an issue. Manual review recommended."
         ]
 
 
 # ── Export summary (PDF generation) ──────────────────────────
 
 async def generate_export_summary(report_data: dict, report_type: str) -> str:
-    """Generates a 3-paragraph narrative for PDF export via Ollama."""
-    prompt = f"""You are a compliance officer writing a formal report summary.
-Based on this {report_type} report data, write a concise 3-paragraph professional summary
-suitable for a PDF report. Use formal language. Return only plain text, no markdown.
+    """Generates a structured narrative for PDF export via Ollama."""
+    prompt = f"""You are an elite Big 4 compliance auditor writing an executive summary for a formal {report_type} report.
+Analyze the following data and provide a highly professional, objective 3-paragraph executive summary. 
+
+Structure:
+Paragraph 1: High-level overview of the entity and the core verdict/risk score.
+Paragraph 2: Key findings, anomalies, and critical risk flags (if any).
+Paragraph 3: Concluding assessment and recommended next steps.
+
+Rules:
+- Adopt a formal, neutral, and authoritative tone.
+- Do not use any markdown formatting (no asterisks, no hash symbols).
+- Do not include greetings or sign-offs.
+- Return ONLY the final plain text.
+- Do NOT include any `<think>` tags or similar output, just the summary.
 
 DATA:
 {json.dumps(report_data, indent=2)[:3000]}
@@ -118,12 +135,15 @@ DATA:
                     "model":  OLLAMA_MODEL,
                     "prompt": prompt,
                     "stream": False,
-                    "options": {"temperature": 0.3},
+                    "options": {"temperature": 0.2},
                 },
             )
-        return resp.json().get("response", "").strip()
+        raw = resp.json().get("response", "").strip()
+        raw = re.sub(r"<think>.*?</think>", "", raw, flags=re.DOTALL).strip()
+        raw = raw.replace("<", "&lt;").replace(">", "&gt;")
+        return raw
     except Exception:
         return (
             f"This is an automated {report_type} report generated "
-            f"by Pramanik RegTech Platform."
+            f"by the Platform. Further manual review is recommended."
         )

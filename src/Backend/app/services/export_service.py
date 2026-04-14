@@ -15,48 +15,47 @@ from reportlab.platypus import (
 from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
 
 # ── Color palette ─────────────────────────────────────────────
-BLUE   = colors.HexColor("#1a56db")
-GREEN  = colors.HexColor("#057a55")
-RED    = colors.HexColor("#c81e1e")
-AMBER  = colors.HexColor("#92400e")
-GREY   = colors.HexColor("#6b7280")
-LIGHT  = colors.HexColor("#f3f4f6")
-WHITE  = colors.white
-DARK   = colors.HexColor("#111827")
+BRAND_DARK = colors.HexColor("#0f172a")  # Slate 900
+BRAND_MID  = colors.HexColor("#334155")  # Slate 700
+BRAND_LIGHT= colors.HexColor("#f8fafc")  # Slate 50
+GREEN      = colors.HexColor("#166534")  # Green 800
+RED        = colors.HexColor("#991b1b")  # Red 800
+AMBER      = colors.HexColor("#9a3412")  # Orange 800
+GREY       = colors.HexColor("#475569")  # Slate 600
+LIGHT      = colors.HexColor("#f1f5f9")  # Slate 100
+WHITE      = colors.white
 
 
 def _styles():
     base = getSampleStyleSheet()
     return {
-        "title":    ParagraphStyle("title",   fontSize=18, fontName="Helvetica-Bold", textColor=DARK,  spaceAfter=6),
-        "h2":       ParagraphStyle("h2",      fontSize=13, fontName="Helvetica-Bold", textColor=BLUE,  spaceAfter=4, spaceBefore=14),
-        "h3":       ParagraphStyle("h3",      fontSize=11, fontName="Helvetica-Bold", textColor=DARK,  spaceAfter=3, spaceBefore=10),
-        "body":     ParagraphStyle("body",    fontSize=9,  fontName="Helvetica",      textColor=GREY,  spaceAfter=4, leading=14),
-        "mono":     ParagraphStyle("mono",    fontSize=8,  fontName="Courier",        textColor=DARK),
-        "center":   ParagraphStyle("center",  fontSize=9,  fontName="Helvetica",      alignment=TA_CENTER, textColor=GREY),
+        "title":    ParagraphStyle("title",   fontSize=18, fontName="Helvetica-Bold", textColor=BRAND_DARK,  spaceAfter=6),
+        "h2":       ParagraphStyle("h2",      fontSize=12, fontName="Helvetica-Bold", textColor=BRAND_DARK,  spaceAfter=6, spaceBefore=16),
+        "h3":       ParagraphStyle("h3",      fontSize=10, fontName="Helvetica-Bold", textColor=BRAND_MID,   spaceAfter=4, spaceBefore=12),
+        "body":     ParagraphStyle("body",    fontSize=9,  fontName="Helvetica",      textColor=GREY,        spaceAfter=5, leading=13),
+        "mono":     ParagraphStyle("mono",    fontSize=8,  fontName="Courier",        textColor=BRAND_DARK),
+        "center":   ParagraphStyle("center",  fontSize=9,  fontName="Helvetica",      alignment=TA_CENTER,   textColor=GREY),
+        "left":     ParagraphStyle("left",    fontSize=9,  fontName="Helvetica",      alignment=TA_LEFT,     textColor=BRAND_DARK),
+        "right":    ParagraphStyle("right",   fontSize=9,  fontName="Helvetica",      alignment=TA_RIGHT,    textColor=BRAND_DARK),
         "pass":     ParagraphStyle("pass",    fontSize=9,  fontName="Helvetica-Bold", textColor=GREEN),
         "fail":     ParagraphStyle("fail",    fontSize=9,  fontName="Helvetica-Bold", textColor=RED),
         "warn":     ParagraphStyle("warn",    fontSize=9,  fontName="Helvetica-Bold", textColor=AMBER),
         "small":    ParagraphStyle("small",   fontSize=7,  fontName="Helvetica",      textColor=GREY),
+        "banner":   ParagraphStyle("banner",  fontSize=10, fontName="Helvetica-Bold", alignment=TA_CENTER,   textColor=WHITE),
     }
 
 
 def _header_table(company: str, pan: str, report_type: str, date_str: str, analyst: str) -> Table:
     data = [[
-        Paragraph(f"<b>PRAMANIK REGTECH</b><br/><font size='8'>NBFC Compliance Platform</font>", _styles()["center"]),
-        Paragraph(f"<b>{report_type.upper()} REPORT</b><br/><font size='8'>{date_str}</font>", _styles()["center"]),
-        Paragraph(f"<b>{company}</b><br/><font size='8'>PAN: {pan} · Analyst: {analyst}</font>", _styles()["center"]),
+        Paragraph(f"<b>PRAMANIK REGTECH</b><br/><font size='8' color='#475569'>NBFC Compliance Platform</font>", _styles()["left"]),
+        Paragraph(f"<b>{report_type.upper()} REPORT</b><br/><font size='8' color='#475569'>{date_str}</font>", _styles()["center"]),
+        Paragraph(f"<b>{company}</b><br/><font size='8' color='#475569'>PAN: {pan} · Analyst: {analyst}</font>", _styles()["right"]),
     ]]
-    t = Table(data, colWidths=[5.5*cm, 8*cm, 6.5*cm])
+    t = Table(data, colWidths=[6*cm, 7*cm, 6*cm])
     t.setStyle(TableStyle([
-        ("BACKGROUND",  (0,0), (-1,0), BLUE),
-        ("TEXTCOLOR",   (0,0), (-1,0), WHITE),
-        ("FONTNAME",    (0,0), (-1,0), "Helvetica-Bold"),
-        ("FONTSIZE",    (0,0), (-1,0), 9),
-        ("ALIGN",       (0,0), (-1,0), "CENTER"),
         ("VALIGN",      (0,0), (-1,0), "MIDDLE"),
-        ("ROWHEIGHT",   (0,0), (-1,0), 30),
-        ("GRID",        (0,0), (-1,-1), 0.3, colors.white),
+        ("LINEBELOW",   (0,0), (-1,0), 0.5, BRAND_MID),
+        ("BOTTOMPADDING",(0,0), (-1,0), 8),
     ]))
     return t
 
@@ -68,27 +67,27 @@ def _kv_table(rows: list, col_widths=None) -> Table:
     cw = col_widths or [5*cm, 14*cm]
     t  = Table(data, colWidths=cw)
     t.setStyle(TableStyle([
-        ("BACKGROUND",  (0,0), (0,-1), LIGHT),
+        ("BACKGROUND",  (0,0), (0,-1), BRAND_LIGHT),
         ("FONTNAME",    (0,0), (0,-1), "Helvetica-Bold"),
-        ("GRID",        (0,0), (-1,-1), 0.3, colors.HexColor("#e5e7eb")),
+        ("GRID",        (0,0), (-1,-1), 0.25, colors.HexColor("#cbd5e1")),
         ("VALIGN",      (0,0), (-1,-1), "MIDDLE"),
-        ("TOPPADDING",  (0,0), (-1,-1), 4),
-        ("BOTTOMPADDING",(0,0), (-1,-1), 4),
+        ("TOPPADDING",  (0,0), (-1,-1), 5),
+        ("BOTTOMPADDING",(0,0), (-1,-1), 5),
         ("LEFTPADDING", (0,0), (-1,-1), 6),
     ]))
     return t
 
 
-def _status_badge(status: str) -> str:
+def _status_badge(status: str):
+    status = str(status).upper()
     color_map = {
-        "PASS": "#057a55", "ACTIVE": "#057a55", "Active": "#057a55", "ISSUED": "#057a55",
-        "Valid": "#057a55", "EXTRACTED": "#057a55",
-        "FAIL": "#c81e1e", "FAILED": "#c81e1e", "NOT_FOUND": "#c81e1e",
-        "MEDIUM": "#92400e", "PARTIAL": "#92400e",
-        "LOW": "#057a55", "HIGH": "#c81e1e",
+        "PASS": "#166534", "ACTIVE": "#166534", "ISSUED": "#166534",
+        "VALID": "#166534", "EXTRACTED": "#166534", "LOW": "#166534",
+        "FAIL": "#991b1b", "FAILED": "#991b1b", "NOT_FOUND": "#991b1b", "HIGH": "#991b1b",
+        "MEDIUM": "#9a3412", "PARTIAL": "#9a3412",
     }
-    c = color_map.get(status, "#6b7280")
-    return f'<font color="{c}"><b>[{status}]</b></font>'
+    c = color_map.get(status, "#475569")
+    return Paragraph(f'<font color="{c}"><b>[{status}]</b></font>', _styles()["body"])
 
 
 # ── Compliance PDF ────────────────────────────────────────────
@@ -121,13 +120,13 @@ async def generate_compliance_pdf(session_data: dict, llm_narrative: str = "") -
     banner_data = [[Paragraph(f"<b>COMPLIANCE VERDICT: {verdict}</b>  |  "
                                f"Consistent: {len(cross.get('passed',[]))}  |  "
                                f"Anomalies: {len(cross.get('failed',[]))}  |  "
-                               f"Warnings: {len(cross.get('warnings',[]))}", s["center"])]]
-    banner = Table(banner_data, colWidths=[19*cm])
+                               f"Warnings: {len(cross.get('warnings',[]))}", s["banner"])]]
+    banner = Table(banner_data, colWidths=[19.0*cm])
     banner.setStyle(TableStyle([
         ("BACKGROUND", (0,0), (-1,-1), v_color),
-        ("TEXTCOLOR",  (0,0), (-1,-1), WHITE),
         ("ROWHEIGHT",  (0,0), (-1,-1), 24),
-        ("FONTNAME",   (0,0), (-1,-1), "Helvetica-Bold"),
+        ("VALIGN",     (0,0), (-1,-1), "MIDDLE"),
+        ("ALIGN",      (0,0), (-1,-1), "CENTER"),
     ]))
     story.append(banner)
     story.append(Spacer(1, 12))
@@ -135,7 +134,11 @@ async def generate_compliance_pdf(session_data: dict, llm_narrative: str = "") -
     # LLM narrative
     if llm_narrative:
         story.append(Paragraph("Executive Summary", s["h2"]))
-        story.append(Paragraph(llm_narrative, s["body"]))
+        for para in llm_narrative.split("\n"):
+            para = para.strip()
+            if para:
+                story.append(Paragraph(para, s["body"]))
+                story.append(Spacer(1, 4))
         story.append(Spacer(1, 8))
 
     # Session info
@@ -164,12 +167,12 @@ async def generate_compliance_pdf(session_data: dict, llm_narrative: str = "") -
             ])
         t = Table(table_data, colWidths=[4.5*cm, 5*cm, 9.5*cm])
         t.setStyle(TableStyle([
-            ("BACKGROUND",   (0,0), (-1,0), GREEN),
+            ("BACKGROUND",   (0,0), (-1,0), BRAND_MID),
             ("TEXTCOLOR",    (0,0), (-1,0), WHITE),
             ("FONTNAME",     (0,0), (-1,0), "Helvetica-Bold"),
             ("FONTSIZE",     (0,0), (-1,-1), 8),
             ("GRID",         (0,0), (-1,-1), 0.3, colors.HexColor("#e5e7eb")),
-            ("BACKGROUND",   (0,1), (-1,-1), colors.HexColor("#f0fdf4")),
+            ("BACKGROUND",   (0,1), (-1,-1), colors.HexColor("#f8fafc")),
             ("ROWHEIGHT",    (0,0), (-1,-1), 16),
             ("VALIGN",       (0,0), (-1,-1), "MIDDLE"),
             ("LEFTPADDING",  (0,0), (-1,-1), 5),
@@ -189,7 +192,7 @@ async def generate_compliance_pdf(session_data: dict, llm_narrative: str = "") -
             ]
             bt = Table(block_data, colWidths=[9.5*cm, 9.5*cm])
             bt.setStyle(TableStyle([
-                ("BACKGROUND",  (0,0), (-1,-1), colors.HexColor("#fff5f5")),
+                ("BACKGROUND",  (0,0), (-1,-1), colors.HexColor("#fef2f2")),
                 ("BOX",         (0,0), (-1,-1), 1, RED),
                 ("GRID",        (0,0), (-1,-1), 0.3, colors.HexColor("#fecaca")),
                 ("FONTSIZE",    (0,0), (-1,-1), 8),
@@ -217,14 +220,14 @@ async def generate_compliance_pdf(session_data: dict, llm_narrative: str = "") -
             if r:
                 status  = r.get("status", "N/A")
                 api_rows.append([
-                    label,
-                    r.get("source", ""),
+                    Paragraph(label, s["body"]),
+                    Paragraph(r.get("source", ""), s["body"]),
                     _status_badge(status),
-                    r.get(detail_field, ""),
+                    Paragraph(r.get(detail_field, ""), s["body"]),
                 ])
         at = Table(api_rows, colWidths=[3*cm, 5*cm, 4.5*cm, 6.5*cm])
         at.setStyle(TableStyle([
-            ("BACKGROUND",  (0,0), (-1,0), BLUE),
+            ("BACKGROUND",  (0,0), (-1,0), BRAND_MID),
             ("TEXTCOLOR",   (0,0), (-1,0), WHITE),
             ("FONTNAME",    (0,0), (-1,0), "Helvetica-Bold"),
             ("FONTSIZE",    (0,0), (-1,-1), 8),
@@ -243,14 +246,14 @@ async def generate_compliance_pdf(session_data: dict, llm_narrative: str = "") -
         for d in docs:
             conf = int((d.get("confidence", 0.9)) * 100)
             doc_rows.append([
-                d.get("doc_type", "").replace("_", " "),
+                Paragraph(d.get("doc_type", "").replace("_", " "), s["body"]),
                 _status_badge(d.get("status", "")),
-                f"{conf}%",
-                d.get("source_file", ""),
+                Paragraph(f"{conf}%", s["body"]),
+                Paragraph(d.get("source_file", ""), s["body"]),
             ])
         dt = Table(doc_rows, colWidths=[5*cm, 3.5*cm, 3*cm, 7.5*cm])
         dt.setStyle(TableStyle([
-            ("BACKGROUND",  (0,0), (-1,0), BLUE),
+            ("BACKGROUND",  (0,0), (-1,0), BRAND_MID),
             ("TEXTCOLOR",   (0,0), (-1,0), WHITE),
             ("FONTNAME",    (0,0), (-1,0), "Helvetica-Bold"),
             ("FONTSIZE",    (0,0), (-1,-1), 8),
@@ -263,7 +266,7 @@ async def generate_compliance_pdf(session_data: dict, llm_narrative: str = "") -
 
     # Footer
     story.append(Spacer(1, 20))
-    story.append(HRFlowable(width="100%", thickness=0.5, color=GREY))
+    story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#cbd5e1")))
     story.append(Paragraph(
         "CONFIDENTIAL — Generated by Pramanik RegTech Platform. For internal NBFC compliance use only.",
         s["small"],
@@ -304,13 +307,14 @@ async def generate_fraud_pdf(fraud_data: dict, llm_narrative: str = "") -> bytes
     r_color = GREEN if risk_level == "LOW" else (AMBER if risk_level == "MEDIUM" else RED)
     banner_data = [[Paragraph(
         f"<b>RISK SCORE: {risk_score}/100  |  LEVEL: {risk_level}  |  "
-        f"FLAGS: {', '.join(flags) if flags else 'None'}</b>", s["center"]
+        f"FLAGS: {', '.join(flags) if flags else 'None'}</b>", s["banner"]
     )]]
-    banner = Table(banner_data, colWidths=[19*cm])
+    banner = Table(banner_data, colWidths=[19.0*cm])
     banner.setStyle(TableStyle([
         ("BACKGROUND", (0,0), (-1,-1), r_color),
-        ("TEXTCOLOR",  (0,0), (-1,-1), WHITE),
         ("ROWHEIGHT",  (0,0), (-1,-1), 24),
+        ("VALIGN",     (0,0), (-1,-1), "MIDDLE"),
+        ("ALIGN",      (0,0), (-1,-1), "CENTER"),
     ]))
     story.append(banner)
     story.append(Spacer(1, 12))
@@ -318,15 +322,19 @@ async def generate_fraud_pdf(fraud_data: dict, llm_narrative: str = "") -> bytes
     # LLM narrative
     if llm_narrative:
         story.append(Paragraph("AI Risk Analysis Summary", s["h2"]))
-        story.append(Paragraph(llm_narrative, s["body"]))
+        for para in llm_narrative.split("\n"):
+            para = para.strip()
+            if para:
+                story.append(Paragraph(para, s["body"]))
+                story.append(Spacer(1, 4))
         story.append(Spacer(1, 8))
 
     # NLP Summary points
     if nlp:
         story.append(Paragraph("Risk Summary Points", s["h2"]))
         for i, pt in enumerate(nlp, 1):
-            bg = colors.HexColor("#f0fdf4") if i == len(nlp) else LIGHT
-            pt_data = [[Paragraph(f"<b>{i}</b>", s["body"]), Paragraph(pt, s["body"])]]
+            bg = colors.HexColor("#f8fafc") if i == len(nlp) else LIGHT
+            pt_data = [[Paragraph(f"<b>{i}</b>", s["body"]), Paragraph(str(pt), s["body"])]]
             pt_t = Table(pt_data, colWidths=[1*cm, 18*cm])
             pt_t.setStyle(TableStyle([
                 ("BACKGROUND", (0,0), (-1,-1), bg),
@@ -359,16 +367,16 @@ async def generate_fraud_pdf(fraud_data: dict, llm_narrative: str = "") -> bytes
         p_rows = [["Name", "Role", "DIN", "PAN", "PEP", "Risk"]]
         for p in persons:
             p_rows.append([
-                p.get("name", ""),
-                p.get("role", ""),
-                p.get("din", ""),
-                p.get("pan", ""),
-                "YES" if p.get("pep") else "No",
-                str(p.get("riskScore", 0)),
+                Paragraph(p.get("name", ""), s["body"]),
+                Paragraph(p.get("role", ""), s["body"]),
+                Paragraph(p.get("din", ""), s["body"]),
+                Paragraph(p.get("pan", ""), s["body"]),
+                Paragraph("YES" if p.get("pep") else "No", s["body"]),
+                Paragraph(str(p.get("riskScore", 0)), s["body"]),
             ])
         pt = Table(p_rows, colWidths=[4.5*cm, 3.5*cm, 3*cm, 3*cm, 1.5*cm, 1.5*cm])
         pt.setStyle(TableStyle([
-            ("BACKGROUND",  (0,0), (-1,0), BLUE),
+            ("BACKGROUND",  (0,0), (-1,0), BRAND_MID),
             ("TEXTCOLOR",   (0,0), (-1,0), WHITE),
             ("FONTNAME",    (0,0), (-1,0), "Helvetica-Bold"),
             ("FONTSIZE",    (0,0), (-1,-1), 8),
@@ -387,16 +395,16 @@ async def generate_fraud_pdf(fraud_data: dict, llm_narrative: str = "") -> bytes
         for r in rpt:
             lvl = r.get("riskLevel", "LOW")
             r_rows.append([
-                r.get("entity", ""),
-                r.get("relationship", ""),
-                r.get("transactionType", ""),
-                r.get("amount", ""),
+                Paragraph(r.get("entity", ""), s["body"]),
+                Paragraph(r.get("relationship", ""), s["body"]),
+                Paragraph(r.get("transactionType", ""), s["body"]),
+                Paragraph(str(r.get("amount", "")), s["body"]),
                 _status_badge(lvl),
-                r.get("flagReason", ""),
+                Paragraph(r.get("flagReason", ""), s["body"]),
             ])
         rt = Table(r_rows, colWidths=[3.5*cm, 3.5*cm, 3*cm, 2.5*cm, 2*cm, 4.5*cm])
         rt.setStyle(TableStyle([
-            ("BACKGROUND",  (0,0), (-1,0), BLUE),
+            ("BACKGROUND",  (0,0), (-1,0), BRAND_MID),
             ("TEXTCOLOR",   (0,0), (-1,0), WHITE),
             ("FONTNAME",    (0,0), (-1,0), "Helvetica-Bold"),
             ("FONTSIZE",    (0,0), (-1,-1), 8),
@@ -409,7 +417,7 @@ async def generate_fraud_pdf(fraud_data: dict, llm_narrative: str = "") -> bytes
 
     # Footer
     story.append(Spacer(1, 20))
-    story.append(HRFlowable(width="100%", thickness=0.5, color=GREY))
+    story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#cbd5e1")))
     story.append(Paragraph(
         "CONFIDENTIAL — Generated by Pramanik RegTech Platform. For internal NBFC use only.",
         s["small"],

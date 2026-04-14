@@ -19,6 +19,10 @@ class Settings(BaseSettings):
     OLLAMA_URL: str = "http://localhost:11434/api/generate"
     OLLAMA_MODEL: str = "llama3.2:3b"
 
+    GROQ_API_KEY :str= "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"
+
+  
+
     # Sandbox PAN API  (real key you provided — swap here)
     SANDBOX_PAN_API_KEY: str = os.getenv("SANDBOX_PAN_API_KEY", "your-sandbox-key-here")
     SANDBOX_PAN_URL: str = "https://api.sandbox.co.in/kyc/pan/status"
