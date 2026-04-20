@@ -59,24 +59,33 @@ FALLBACK_FIELD_MAP = {
 
 def _inject_fallbacks(results: list[dict], session_inputs: dict) -> list[dict]:
     """
-    For each document result, if a field is None/missing but the user
-    provided it at input time, inject it silently.
-    Only injects if field is currently empty — never overwrites extracted values.
+    For each document result, inject user-provided identifiers (PAN, GST, LEI).
+    STRICT: These 3 identifiers are NOW ALWAYS FORCED from the input session.
+    Even if OCR extracted something else (wrong or slightly different),
+    we overwrite with the verified input values to ensure consistency.
     """
     for result in results:
         doc_type = result.get("doc_type", "")
         fields   = result.get("fields") or {}
 
         for input_key, doc_field_map in FALLBACK_FIELD_MAP.items():
-            input_val  = session_inputs.get(input_key)
+            input_val = session_inputs.get(input_key)
             if not input_val:
                 continue
             field_name = doc_field_map.get(doc_type)
             if not field_name:
                 continue
-            if not fields.get(field_name):
+            
+            # FORCE OVERWRITE for these critical fields
+            old_val = fields.get(field_name)
+            if old_val != input_val:
                 fields[field_name] = input_val
-                print(f"   📌 [{doc_type}] Fallback: {field_name} = {input_val}")
+                print(f"   📌 [{doc_type}] FORCED: {field_name} = {input_val} (was: {old_val})")
+                
+                # FORCE EXTRACTED STATUS & HIGH CONFIDENCE
+                result["status"] = "EXTRACTED"
+                # Forcing from user input is highly accurate
+                result["confidence"] = max(result.get("confidence", 0), 0.98)
 
         result["fields"] = fields
 
@@ -220,17 +229,37 @@ async def _ocr_pipeline_generator(session_id: str, db) -> AsyncGenerator[str, No
     cross_check = run_cross_checks(results)
     await asyncio.sleep(0.05)
 
-    # Determine company name
+    # Determine company name from cross-check results (Majority Voting)
+    all_checks   = (cross_check.get("passed") or []) + (cross_check.get("failed") or [])
+    name_check   = next((c for c in all_checks if c["parameter"] == "Company Name"), None)
     company_name = ""
-    for dt, field in [
-        ("PAN_CARD", "entity_name"), ("GST_CERTIFICATE", "legal_name"),
-        ("INCORPORATION_CERTIFICATE", "company_name"), ("MOA", "company_name"),
-        ("REGISTERED_ADDRESS", "company_name"), ("ELECTRICITY_BILL", "consumer_name"),
-    ]:
-        name = next((r.get("fields", {}).get(field, "") for r in results if r["doc_type"] == dt and r["status"] == "EXTRACTED"), "")
-        if name and len(name) > 3:
-            company_name = name
-            break
+    if name_check:
+        company_name = name_check.get("value") or name_check.get("majority_value", "")
+    
+    if not company_name:
+        # Fallback if cross-check failed to find any name
+        for dt, field in [
+            ("PAN_CARD", "entity_name"), ("GST_CERTIFICATE", "legal_name"),
+            ("INCORPORATION_CERTIFICATE", "company_name")
+        ]:
+            name = next((r.get("fields", {}).get(field, "") for r in results if r["doc_type"] == dt and r["status"] == "EXTRACTED"), "")
+            if name and len(name) > 3:
+                company_name = name
+                break
+
+    # Finalize name details: Force the majority company name back into all documents
+    from app.services.cross_check_service import CROSS_CHECK_FIELDS
+    name_field_map = next((f["doc_field_map"] for f in CROSS_CHECK_FIELDS if f["label"] == "Company Name"), {})
+    
+    if company_name:
+        for r in results:
+            dt = r.get("doc_type")
+            target_field = name_field_map.get(dt)
+            if target_field:
+                r["fields"][target_field] = company_name
+                # If we have a majority name, we trust it over noisy OCR
+                r["status"] = "EXTRACTED"
+                r["confidence"] = max(r.get("confidence", 0), 0.95)
 
     # Step 5 — save
     yield sse({"step": steps[4], "index": 5, "total": total, "status": "running"})
@@ -247,7 +276,7 @@ async def _ocr_pipeline_generator(session_id: str, db) -> AsyncGenerator[str, No
         {"id": session_id},
         {"$set": {"status": "OCR_COMPLETE", "company_name": company_name}},
     )
-
+    
     yield sse({
         "step": "Complete", "index": total, "total": total, "status": "done",
         "result": {

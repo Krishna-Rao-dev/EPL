@@ -72,15 +72,27 @@ CROSS_CHECK_FIELDS = [
 ]
 
 
-def _normalize(val: Any) -> str:
-    if val is None:
-        return ""
+def clean_name(val: Any) -> str:
+    if val is None: return ""
     s = str(val).upper().strip()
+    # Correct common OCR errors
+    for old, new in [
+        ("PAVATE", "PRIVATE"), ("LID", "LTD"), ("LIIMITED", "LIMITED")
+    ]:
+        s = s.replace(old, new)
+    return " ".join(s.split())
+
+
+def _normalize(val: Any) -> str:
+    s = clean_name(val)
+    if not s: return ""
     s = unicodedata.normalize("NFKD", s)
     s = re.sub(r"[.\-\s]+", " ", s).strip()
     # Normalise company name suffixes
-    for old, new in [("PRIVATE LIMITED", "PVT LTD"), ("PVT. LTD.", "PVT LTD"),
-                     ("PVT.LTD.", "PVT LTD"), ("LIMITED", "LTD"), ("LTD.", "LTD")]:
+    for old, new in [
+        ("PRIVATE LIMITED", "PVT LTD"), ("PVT. LTD.", "PVT LTD"),
+        ("PVT.LTD.", "PVT LTD"), ("LIMITED", "LTD"), ("LTD.", "LTD")
+    ]:
         s = s.replace(old, new)
     return " ".join(s.split())
 
@@ -119,7 +131,7 @@ def run_cross_checks(documents: list[dict]) -> dict:
             # Consistent
             report["passed"].append({
                 "parameter": label,
-                "value":     list(found.values())[0],
+                "value":     clean_name(list(found.values())[0]),
                 "docs":      list(found.keys()),
             })
         else:
@@ -140,7 +152,7 @@ def run_cross_checks(documents: list[dict]) -> dict:
 
             report["failed"].append({
                 "parameter":           label,
-                "majority_value":      majority_val,
+                "majority_value":      clean_name(majority_val),
                 "inconsistent_docs":   inconsistent_docs,
                 "inconsistent_values": inconsistent_vals,
                 "all_values":          found,

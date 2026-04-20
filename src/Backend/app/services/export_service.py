@@ -158,24 +158,32 @@ async def generate_compliance_pdf(session_data: dict, llm_narrative: str = "") -
     # Passed params
     if cross.get("passed"):
         story.append(Paragraph("Consistent Parameters", s["h3"]))
-        table_data = [["Parameter", "Value", "Documents"]]
+        table_data = [[
+            Paragraph("<b>Parameter</b>", s["banner"]), 
+            Paragraph("<b>Value</b>", s["banner"]), 
+            Paragraph("<b>Documents</b>", s["banner"])
+        ]]
         for p in cross["passed"]:
+            doc_list = p.get("docs", [])
+            # Cleaner display for many documents
+            doc_text = ", ".join(doc_list)
+            if len(doc_list) >= 4:
+                doc_text = "PRESENT IN ALL RELEVANT DOCUMENTS"
+
             table_data.append([
-                p.get("parameter", ""),
-                p.get("value", ""),
-                ", ".join(p.get("docs", [])),
+                Paragraph(p.get("parameter", ""), s["body"]),
+                Paragraph(p.get("value", ""), s["body"]),
+                Paragraph(doc_text, s["body"]),
             ])
-        t = Table(table_data, colWidths=[4.5*cm, 5*cm, 9.5*cm])
+        t = Table(table_data, colWidths=[4.0*cm, 5.5*cm, 7.9*cm], repeatRows=1)
         t.setStyle(TableStyle([
             ("BACKGROUND",   (0,0), (-1,0), BRAND_MID),
-            ("TEXTCOLOR",    (0,0), (-1,0), WHITE),
-            ("FONTNAME",     (0,0), (-1,0), "Helvetica-Bold"),
-            ("FONTSIZE",     (0,0), (-1,-1), 8),
             ("GRID",         (0,0), (-1,-1), 0.3, colors.HexColor("#e5e7eb")),
             ("BACKGROUND",   (0,1), (-1,-1), colors.HexColor("#f8fafc")),
-            ("ROWHEIGHT",    (0,0), (-1,-1), 16),
             ("VALIGN",       (0,0), (-1,-1), "MIDDLE"),
             ("LEFTPADDING",  (0,0), (-1,-1), 5),
+            ("TOPPADDING",   (0,0), (-1,-1), 4),
+            ("BOTTOMPADDING",(0,0), (-1,-1), 4),
         ]))
         story.append(t)
         story.append(Spacer(1, 8))
@@ -184,23 +192,35 @@ async def generate_compliance_pdf(session_data: dict, llm_narrative: str = "") -
     if cross.get("failed"):
         story.append(Paragraph("Anomalies Detected", s["h3"]))
         for f in cross["failed"]:
+            all_doc_types = list(f.get("all_values", {}).keys())
+            bad_docs = f.get("inconsistent_docs", [])
+            good_docs = [d for d in all_doc_types if d not in bad_docs]
+            
+            # User request: "ALL EXCEPT X" or "NONE EXCEPT X"
+            if not good_docs:
+                consist_text = "NONE (TOTAL MISMATCH)"
+            elif len(good_docs) >= len(bad_docs):
+                consist_text = f"ALL EXCEPT {', '.join(bad_docs)}"
+            else:
+                consist_text = f"NONE EXCEPT {', '.join(good_docs)}"
+
             block_data = [
                 [Paragraph(f"<b>Parameter: {f['parameter']}</b>", s["fail"]),
                  Paragraph(f"Expected: <b>{f.get('majority_value','')}</b>", s["body"])],
-                [Paragraph(f"Inconsistent in: {', '.join(f.get('inconsistent_docs',[]))}", s["warn"]),
+                [Paragraph(f"<b>IS CONSISTENT:</b> {consist_text}", s["warn"]),
                  Paragraph(f"Found: {', '.join(f.get('inconsistent_values',[]))}", s["body"])],
             ]
-            bt = Table(block_data, colWidths=[9.5*cm, 9.5*cm])
+            bt = Table(block_data, colWidths=[8.7*cm, 8.7*cm])
             bt.setStyle(TableStyle([
                 ("BACKGROUND",  (0,0), (-1,-1), colors.HexColor("#fef2f2")),
                 ("BOX",         (0,0), (-1,-1), 1, RED),
                 ("GRID",        (0,0), (-1,-1), 0.3, colors.HexColor("#fecaca")),
-                ("FONTSIZE",    (0,0), (-1,-1), 8),
-                ("TOPPADDING",  (0,0), (-1,-1), 5),
-                ("BOTTOMPADDING",(0,0),(-1,-1), 5),
+                ("VALIGN",      (0,0), (-1,-1), "TOP"),
+                ("TOPPADDING",  (0,0), (-1,-1), 6),
+                ("BOTTOMPADDING",(0,0),(-1,-1), 6),
                 ("LEFTPADDING", (0,0), (-1,-1), 6),
             ]))
-            story.append(bt)
+            story.append(KeepTogether(bt))
             story.append(Spacer(1, 6))
 
     story.append(Spacer(1, 10))
@@ -225,18 +245,16 @@ async def generate_compliance_pdf(session_data: dict, llm_narrative: str = "") -
                     _status_badge(status),
                     Paragraph(r.get(detail_field, ""), s["body"]),
                 ])
-        at = Table(api_rows, colWidths=[3*cm, 5*cm, 4.5*cm, 6.5*cm])
+        at = Table(api_rows, colWidths=[3*cm, 5*cm, 3.5*cm, 5.9*cm], repeatRows=1)
         at.setStyle(TableStyle([
             ("BACKGROUND",  (0,0), (-1,0), BRAND_MID),
-            ("TEXTCOLOR",   (0,0), (-1,0), WHITE),
-            ("FONTNAME",    (0,0), (-1,0), "Helvetica-Bold"),
-            ("FONTSIZE",    (0,0), (-1,-1), 8),
             ("GRID",        (0,0), (-1,-1), 0.3, colors.HexColor("#e5e7eb")),
-            ("ROWHEIGHT",   (0,0), (-1,-1), 16),
             ("VALIGN",      (0,0), (-1,-1), "MIDDLE"),
             ("LEFTPADDING", (0,0), (-1,-1), 5),
+            ("TOPPADDING",  (0,0), (-1,-1), 4),
+            ("BOTTOMPADDING",(0,0), (-1,-1), 4),
         ]))
-        story.append(at)
+        story.append(KeepTogether(at))
         story.append(Spacer(1, 10))
 
     # Document table
@@ -251,18 +269,16 @@ async def generate_compliance_pdf(session_data: dict, llm_narrative: str = "") -
                 Paragraph(f"{conf}%", s["body"]),
                 Paragraph(d.get("source_file", ""), s["body"]),
             ])
-        dt = Table(doc_rows, colWidths=[5*cm, 3.5*cm, 3*cm, 7.5*cm])
+        dt = Table(doc_rows, colWidths=[5*cm, 3.5*cm, 2.5*cm, 6.4*cm], repeatRows=1)
         dt.setStyle(TableStyle([
             ("BACKGROUND",  (0,0), (-1,0), BRAND_MID),
-            ("TEXTCOLOR",   (0,0), (-1,0), WHITE),
-            ("FONTNAME",    (0,0), (-1,0), "Helvetica-Bold"),
-            ("FONTSIZE",    (0,0), (-1,-1), 8),
             ("GRID",        (0,0), (-1,-1), 0.3, colors.HexColor("#e5e7eb")),
-            ("ROWHEIGHT",   (0,0), (-1,-1), 15),
             ("VALIGN",      (0,0), (-1,-1), "MIDDLE"),
             ("LEFTPADDING", (0,0), (-1,-1), 5),
+            ("TOPPADDING",  (0,0), (-1,-1), 4),
+            ("BOTTOMPADDING",(0,0), (-1,-1), 4),
         ]))
-        story.append(dt)
+        story.append(KeepTogether(dt))
 
     # Footer
     story.append(Spacer(1, 20))
@@ -374,18 +390,16 @@ async def generate_fraud_pdf(fraud_data: dict, llm_narrative: str = "") -> bytes
                 Paragraph("YES" if p.get("pep") else "No", s["body"]),
                 Paragraph(str(p.get("riskScore", 0)), s["body"]),
             ])
-        pt = Table(p_rows, colWidths=[4.5*cm, 3.5*cm, 3*cm, 3*cm, 1.5*cm, 1.5*cm])
+        pt = Table(p_rows, colWidths=[4.5*cm, 3*cm, 3*cm, 3*cm, 1.5*cm, 2.4*cm], repeatRows=1)
         pt.setStyle(TableStyle([
             ("BACKGROUND",  (0,0), (-1,0), BRAND_MID),
-            ("TEXTCOLOR",   (0,0), (-1,0), WHITE),
-            ("FONTNAME",    (0,0), (-1,0), "Helvetica-Bold"),
-            ("FONTSIZE",    (0,0), (-1,-1), 8),
             ("GRID",        (0,0), (-1,-1), 0.3, colors.HexColor("#e5e7eb")),
-            ("ROWHEIGHT",   (0,0), (-1,-1), 15),
             ("VALIGN",      (0,0), (-1,-1), "MIDDLE"),
             ("LEFTPADDING", (0,0), (-1,-1), 5),
+            ("TOPPADDING",  (0,0), (-1,-1), 4),
+            ("BOTTOMPADDING",(0,0), (-1,-1), 4),
         ]))
-        story.append(pt)
+        story.append(KeepTogether(pt))
         story.append(Spacer(1, 10))
 
     # RPT table
@@ -402,18 +416,16 @@ async def generate_fraud_pdf(fraud_data: dict, llm_narrative: str = "") -> bytes
                 _status_badge(lvl),
                 Paragraph(r.get("flagReason", ""), s["body"]),
             ])
-        rt = Table(r_rows, colWidths=[3.5*cm, 3.5*cm, 3*cm, 2.5*cm, 2*cm, 4.5*cm])
+        rt = Table(r_rows, colWidths=[3*cm, 3*cm, 3*cm, 2*cm, 2*cm, 4.4*cm], repeatRows=1)
         rt.setStyle(TableStyle([
             ("BACKGROUND",  (0,0), (-1,0), BRAND_MID),
-            ("TEXTCOLOR",   (0,0), (-1,0), WHITE),
-            ("FONTNAME",    (0,0), (-1,0), "Helvetica-Bold"),
-            ("FONTSIZE",    (0,0), (-1,-1), 8),
             ("GRID",        (0,0), (-1,-1), 0.3, colors.HexColor("#e5e7eb")),
-            ("ROWHEIGHT",   (0,0), (-1,-1), 15),
             ("VALIGN",      (0,0), (-1,-1), "MIDDLE"),
             ("LEFTPADDING", (0,0), (-1,-1), 5),
+            ("TOPPADDING",  (0,0), (-1,-1), 4),
+            ("BOTTOMPADDING",(0,0), (-1,-1), 4),
         ]))
-        story.append(rt)
+        story.append(KeepTogether(rt))
 
     # Footer
     story.append(Spacer(1, 20))

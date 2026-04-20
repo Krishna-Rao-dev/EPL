@@ -159,3 +159,19 @@ async def get_fraud_report(session_id: str, user=Depends(get_current_user)):
     if "created_at" in fraud:
         fraud["created_at"] = fraud["created_at"].isoformat()
     return fraud
+
+
+@router.delete("/{session_id}")
+async def delete_record(session_id: str, user=Depends(get_current_user)):
+    """
+    Permanently delete all data associated with this session.
+    """
+    db = get_db()
+    
+    # Delete from all relevant collections
+    await db.compliance_records.delete_one({"session_id": session_id})
+    await db.fraud_records.delete_one({"session_id": session_id})
+    await db.verification_records.delete_one({"session_id": session_id})
+    await db.sessions.delete_one({"id": session_id})
+    
+    return {"status": "success", "message": f"Record {session_id} deleted."}

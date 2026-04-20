@@ -278,7 +278,7 @@ EXTRACTION RULES:
 - company_name: full legal name exactly as written in Clause I
 - cin: starts with U or L (may not be present in old MOAs)
 - authorized_capital: total capital in rupees as digits only (e.g. 2500000 from Rs.25,00,000)
-- main_objects: extract actual business object statements from Clause III — each is a meaningful sentence describing what the company does
+- main_objects: extract EVERY numbered business activity from Clause III(A). These are the "Principal Business Objects". Do not skip any. Each point must be a full, meaningful sentence. Return as a clean list of strings.
 - subscribers: people listed at end who subscribed to MOA with their share counts
 - pincode: 6-digit PIN from any address mentioned
 - Do NOT copy these example values — extract from the OCR text below
@@ -325,6 +325,12 @@ Extract into this exact JSON (use null for missing):
   "directors": [
     {{"name": "<extracted director 1>", "din": "<extracted DIN 1>"}},
     {{"name": "<extracted director 2>", "din": "<extracted DIN 2>"}}
+  ],
+  "summary_clauses": [
+    "<key clause 1 summary e.g. Restriction on share transfer>",
+    "<key clause 2 summary e.g. Voting rights 1 share 1 vote>",
+    "<key clause 3 summary e.g. Director powers for borrowing>",
+    "<key clause 4 summary e.g. Audit and Dividend regulations>"
   ]
 }}
 
@@ -335,6 +341,7 @@ EXTRACTION RULES:
 - min_directors, max_directors: digit strings only (e.g. "2", "15")
 - directors: extract ALL first directors listed with their 8-digit DIN numbers
 - DIN is always 8 digits — look for labels "DIN:", "Director Identification Number:"
+- summary_clauses: extract high-level summaries of the most important Articles (Share transfer, Borrowing powers, Quorum for meetings, etc.).
 - Do NOT copy these example values — extract from the OCR text below
 
 

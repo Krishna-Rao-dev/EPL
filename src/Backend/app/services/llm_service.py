@@ -60,12 +60,12 @@ async def generate_nlp_summary(
     prompt = f"""You are a financial fraud analyst at an Indian NBFC reviewing a loan application.
 Write a risk summary as a JSON array of 6-7 clear English sentences.
 Each sentence is one array item. The last sentence must be the overall recommendation.
-Return ONLY a valid JSON array of strings. No markdown, no explanation.
+Return ONLY a valid answer with "\n" (break line). No markdown, no explanation.
+
 
 DATA:
 {json.dumps(context, indent=2)}
-
-Format: ["Point 1.", "Point 2.", "Point 3.", "Point 4.", "Point 5.", "Point 6.", "Recommendation."]"""
+"""
 
     try:
         async with httpx.AsyncClient(timeout=120.0) as client:

@@ -26,7 +26,7 @@ def validate_gstin_format(gstin: str) -> dict:
     if not gstin:
         return {"valid": False, "error": "No GSTIN provided"}
     gstin = gstin.upper().strip()
-    if re.match(r"^\d{2}[A-Z]{5}\d{4}[A-Z]\d[Z][A-Z\d]$", gstin):
+    if re.match(r"^\d{2}[A-Z]{5}\d{4}[A-Z][0-9A-Z]Z[0-9A-Z]$", gstin):
         return {"valid": True, "gstin": gstin, "state_code": gstin[:2]}
     return {"valid": False, "gstin": gstin, "error": "Invalid GSTIN format"}
 
@@ -263,26 +263,56 @@ def normalize_company_name(name: str) -> str:
     if not name:
         return ""
     n = name.upper().strip()
-    for old, new in [("PRIVATE LIMITED", "PVT LTD"), ("PVT. LTD.", "PVT LTD"),
-                     ("PVT.LTD.", "PVT LTD"), ("LIMITED", "LTD"), ("LTD.", "LTD")]:
+    # Correct common OCR errors
+    for old, new in [
+        ("PAVATE", "PRIVATE"), ("LID", "LTD"), ("LIIMITED", "LIMITED")
+    ]:
+        n = n.replace(old, new)
+    
+    # Normalise structures
+    for old, new in [
+        ("PRIVATE LIMITED", "PVT LTD"), ("PVT. LTD.", "PVT LTD"),
+        ("PVT.LTD.", "PVT LTD"), ("LIMITED", "LTD"), ("LTD.", "LTD")
+    ]:
         n = n.replace(old, new)
     return " ".join(n.split())
 
 
 def fuzzy_name_match(names: dict, threshold: float = 0.82) -> dict:
+    """
+    names: {source: raw_name}
+    Matches all against the most authoritative source.
+    """
     normalized = {src: normalize_company_name(n) for src, n in names.items() if n}
     if not normalized:
         return {"consistent": True, "base": "", "details": {}}
+    
+    # Priority: Canonical APIs > OCR
+    priority = ["GLEIF", "SANDBOX_CIN", "SANDBOX_PAN", "OCR_INCORP", "OCR_PAN", "OCR_GST"]
+    base_src = next((s for s in priority if s in names), list(names.keys())[0])
+    
+    base_raw  = names[base_src]
+    base_norm = normalized[base_src]
+    
     results   = {}
-    base_src, base_name = list(normalized.items())[0]
     all_match = True
-    for src, name in normalized.items():
-        score = difflib.SequenceMatcher(None, base_name, name).ratio()
+    for src, norm_val in normalized.items():
+        score = difflib.SequenceMatcher(None, base_norm, norm_val).ratio()
         match = score >= threshold
         if not match:
+            # If it's an OCR source and it fails against API, we don't necessarily 
+            # fail the whole thing if most others match. 
+            # But for simplicity, we flag inconsistency.
             all_match = False
-        results[src] = {"name": name, "score": round(score, 3), "match": match}
-    return {"consistent": all_match, "base": base_name, "details": results, "threshold": threshold}
+        results[src] = {"name": names[src], "score": round(score, 3), "match": match}
+        
+    return {
+        "consistent": all_match, 
+        "base": base_raw, 
+        "details": results, 
+        "threshold": threshold,
+        "source": base_src
+    }
 
 
 # ── Master runner ─────────────────────────────────────────────

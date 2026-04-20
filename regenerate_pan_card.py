@@ -9,7 +9,7 @@ from PIL import Image, ImageDraw, ImageFont
 import math
 import os
 
-OUT = "fake_docs_v2"
+OUT = "fake_pan_card"
 os.makedirs(OUT, exist_ok=True)
 
 E = {
@@ -19,7 +19,7 @@ E = {
 }
 
 def make_pan_card():
-    path = f"{OUT}/01_Company_PAN_Card_Regenerated.png"
+    path = f"{OUT}/01_Company_PAN_Card_Regenerated_new.png"
 
     CW, CH = 1012, 638   # standard card ratio at high res
     img  = Image.new("RGB", (CW, CH), (255, 255, 255))
@@ -50,12 +50,12 @@ def make_pan_card():
     # ── Header text ──────────────────────────────────────────────
     try:
         # Better font paths for Windows
-        font_hdr   = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", 28)
-        font_sub   = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 18)
-        font_label = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 20)
-        font_value = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", 24)
-        font_pan   = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", 52)
-        font_small = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 16)
+        font_hdr   = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", 30)
+        font_sub   = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 30)
+        font_label = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 40)
+        font_value = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", 30)
+        font_pan   = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", 200)
+        font_small = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 25)
         
         # Mangal or Nirmala UI for Hindi/Devanagari text
         try:
