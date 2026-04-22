@@ -31,8 +31,10 @@
 3. Configure environment variables:
    Create a `.env` file in the `src` directory and add your API keys:
    ```env
-   GROQ_API_KEY=your_groq_api_key_here
-   TESSERACT_CMD=C:\Program Files\Tesseract-OCR\tesseract.exe  # (If on Windows)
+   SANDBOX_PAN_API_KEY=INSERT_KEY_HERE
+   SANDBOX_AUTH_URL=https://api.sandbox.co.in/authenticate
+   SANDBOX_PAN_URL=https://api.sandbox.co.in/kyc/pan/status
+   GROQ_API_KEY = INSERT_KEY_HERE
    ```
 
 ## 📊 Document Data Structures (JSON)
