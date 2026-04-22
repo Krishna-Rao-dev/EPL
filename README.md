@@ -31,10 +31,8 @@
 3. Configure environment variables:
    Create a `.env` file in the `src` directory and add your API keys:
    ```env
-      SANDBOX_PAN_API_KEY=INSERT_KEY_HERE
-      SANDBOX_AUTH_URL=https://api.sandbox.co.in/authenticate
-      SANDBOX_PAN_URL=https://api.sandbox.co.in/kyc/pan/status
-      GROQ_API_KEY = INSERT_KEY_HERE
+   GROQ_API_KEY=your_groq_api_key_here
+   TESSERACT_CMD=C:\Program Files\Tesseract-OCR\tesseract.exe  # (If on Windows)
    ```
 
 ## 📊 Document Data Structures (JSON)
@@ -94,21 +92,3 @@ Pramanik uses specialized agents to ensure precise extraction. Below are the cor
 - **95%+ Extraction Accuracy**: By utilizing document-specific heuristic prompts and majority-voting mechanisms for entity reconciliation, Pramanik minimizes manual data entry errors.
 - **Rapid Onboarding**: Reduces KYC processing time from several days to under 5 minutes, allowing financial institutions to onboard corporate clients near-instantaneously.
 - **Enhanced Fraud Resilience**: Simplifies fraud detection by automatically flagging discrepancies between statutory filings (like MOA) and identity proofs, drastically reducing the risk of synthetic identity fraud.
-
-
-
-Here are few snapshots of the Application:
-
-<img width="1325" height="853" alt="image" src="https://github.com/user-attachments/assets/e25ec693-3227-40a2-a414-df6f75618e9e" />
-<br/>
-<img width="1600" height="761" alt="image" src="https://github.com/user-attachments/assets/88c13874-7029-4286-90d5-819ab592286f" />
-<br/>
-<img width="1600" height="764" alt="image" src="https://github.com/user-attachments/assets/abdaa135-4990-4342-945e-ed4de415cc7b" />
-<br/>
-<img width="1600" height="764" alt="image" src="https://github.com/user-attachments/assets/8632d391-1e42-42d4-bdbe-687ec7cd6f3e" />
-<br/>
-<img width="1600" height="760" alt="image" src="https://github.com/user-attachments/assets/81ef7b21-a84d-4f5d-a9cc-dc80d1f34977" />
-<br/>
-<img width="1600" height="892" alt="image" src="https://github.com/user-attachments/assets/aa0f1354-d010-4673-908b-7fd473f6065a" />
-<br/>
-<img width="1600" height="796" alt="image" src="https://github.com/user-attachments/assets/c8bf7229-3da8-4db9-9318-e27ad0a6a717" />
